@@ -5,6 +5,11 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: sto
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d sto"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
     ports:
       - "5432:5432"
     volumes:

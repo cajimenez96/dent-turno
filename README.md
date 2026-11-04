@@ -13,18 +13,27 @@ Fase 0 (cimientos): ingreso con email y clave, sesiones con cierre a los 30 minu
 
 ## Cómo correrlo en tu PC
 
-Necesitás Node 22 o más nuevo y Docker.
+Por ahora se trabaja todo en local, sin Neon ni Vercel. Necesitás Node 22 o más nuevo y Docker (o un Postgres 16+ propio con `btree_gist` y `pg_trgm`).
 
 ```bash
-npm install                     # también instala los ganchos de husky
-docker compose up -d            # Postgres local en el puerto 5432
-cp .env.example .env.local      # los valores por defecto sirven para el Postgres de Docker
-npm run db:migrar               # aplica migraciones/*.sql
-npm run crear-usuario -- --email vos@ejemplo.com --nombre "Dra. Ana" --matricula 1234
-npm run dev                     # http://localhost:3000
+npm install          # también instala los ganchos de husky
+npm run db:local     # enciende Postgres, crea la base, migra y carga datos de prueba
+npm run dev          # http://localhost:3000
 ```
 
-`npm run crear-usuario` pide la clave por teclado (mínimo 12 caracteres). Si la olvidás: `npm run reiniciar-clave -- --email vos@ejemplo.com`. No hay registro público ni recuperación por email.
+Ingresá con `doctora@ejemplo.test` (profesional) o `secretaria@ejemplo.test`; la clave de ambos es `clave-de-prueba-123`. Son datos inventados y solo existen en tu PC.
+
+| Comando | Qué hace |
+| --- | --- |
+| `npm run db:local` | Deja todo listo. Se puede repetir: no pisa nada. Si ya hay un Postgres en la URL de `.env.local` lo usa y no toca Docker; si no, corre `docker compose up -d --wait`. Crea `.env.local` si falta. |
+| `npm run db:semilla` | Carga los datos de prueba si todavía no están (12 pacientes y 11 turnos de la semana en curso). |
+| `npm run db:reiniciar` | Borra la base local y la rearma desde cero, con datos de prueba. |
+| `npm run db:detener` | Apaga el Postgres de Docker; los datos se conservan. |
+| `npm run db:migrar` | Solo aplica migraciones nuevas. |
+
+Estos comandos se niegan a trabajar si `DATABASE_URL` apunta a otro equipo (por ejemplo Neon), para no borrar una base real por error.
+
+Para tus propios usuarios: `npm run crear-usuario -- --email vos@ejemplo.com --nombre "Dra. Ana" --matricula 1234` (pide la clave por teclado, mínimo 12 caracteres). Si la olvidás: `npm run reiniciar-clave -- --email vos@ejemplo.com`. No hay registro público ni recuperación por email.
 
 ## Pruebas y ganchos
 
@@ -34,9 +43,9 @@ npm run dev                     # http://localhost:3000
 | `npm run test:db` | Pruebas contra Postgres: solapamientos, auditoría inalterable, restricciones. Crean y borran una base temporal en el servidor de `TEST_DATABASE_URL`. |
 | `npm run lint` · `npm run tipos` | ESLint y TypeScript. |
 
-`husky` corre `lint`, `tipos`, `test` y un chequeo de secretos antes de cada commit, y `test:db`, `npm audit` y `build` antes de cada push (hace falta Docker encendido). Se pueden saltear con `--no-verify` o `HUSKY=0`; sin CI, la última barrera es el build de Vercel.
+`husky` corre `lint`, `tipos`, `test` y un chequeo de secretos antes de cada commit, y `test:db`, `npm audit` y `build` antes de cada push (hace falta la base local encendida: `npm run db:local`). Se pueden saltear con `--no-verify` o `HUSKY=0`; sin CI, la última barrera es el build de Vercel.
 
-## Despliegue
+## Despliegue (pendiente: se hará cuando se decida salir de local)
 
 1. Crear el proyecto en Neon (región São Paulo si el plan Free la permite; no se puede cambiar después) y una rama `pruebas` **antes** de cargar pacientes reales.
 2. En Vercel, importar este repositorio y cargar `DATABASE_URL` (conexión agrupada) y `DATABASE_URL_DIRECT` (conexión directa) en cada entorno: producción con la rama principal de Neon, preview con la rama `pruebas`.
