@@ -1,0 +1,13 @@
+# Postgres local para desarrollo y pruebas. Las extensiones btree_gist y pg_trgm vienen en la imagen.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: sto
+    ports:
+      - "5432:5432"
+    volumes:
+      - sto-datos:/var/lib/postgresql/data
+volumes:
+  sto-datos:

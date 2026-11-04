@@ -1,0 +1,4 @@
+npm run lint
+npm run tipos
+npm test
+node scripts/chequear-secretos.mjs

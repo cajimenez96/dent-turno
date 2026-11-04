@@ -1,0 +1,21 @@
+@import "./variables.css";
+@theme {
+  --color-linear-void: var(--linear-void);
+  --color-linear-carbon: var(--linear-carbon);
+  --color-linear-obsidian: var(--linear-obsidian);
+  --color-linear-graphite: var(--linear-graphite);
+  --color-linear-smoke: var(--linear-smoke);
+  --color-linear-ash: var(--linear-ash);
+  --color-linear-fog: var(--linear-fog);
+  --color-linear-mist: var(--linear-mist);
+  --color-linear-bone: var(--linear-bone);
+  --color-linear-paper: var(--linear-paper);
+  --color-linear-acid-lime: var(--linear-acid-lime);
+  --color-linear-pulse-green: var(--linear-pulse-green);
+  --color-linear-coral-red: var(--linear-coral-red);
+  --color-linear-signal-teal: var(--linear-signal-teal);
+  --color-linear-iris-violet: var(--linear-iris-violet);
+  --color-linear-lavender: var(--linear-lavender);
+  --font-linear: var(--linear-font);
+  --font-linear-mono: var(--linear-mono);
+}
