@@ -9,7 +9,13 @@ Stack: Next.js (App Router) en Vercel Hobby, PostgreSQL en Neon Free, Drizzle OR
 
 ## Estado
 
-Fase 0 (cimientos): ingreso con email y clave, sesiones con cierre a los 30 minutos de inactividad, permisos por rol, auditoría inalterable, esquema base con la restricción que impide turnos superpuestos, y los scripts de respaldo y restauración. La agenda llega en la fase 1.
+Fase 0 (cimientos): ingreso con email y clave, sesiones con cierre a los 30 minutos de inactividad, permisos por rol, auditoría inalterable, esquema base con la restricción que impide turnos superpuestos, y los scripts de respaldo y restauración.
+
+Fase 1 (agenda):
+- **Pacientes:** alta, edición y búsqueda sin importar tildes; alerta de posibles duplicados (mismo documento, que no se puede repetir, o nombre muy parecido, que pide confirmar).
+- **Horario laboral y bloqueos** (menú Configuración): hasta dos franjas por día; bloqueos puntuales (vacaciones) o semanales (almuerzo). Un bloqueo que cae sobre turnos ya dados pide confirmación y no los cancela.
+- **Agenda semanal y turnos:** dar, mover, marcar atendido o ausente, liberar el horario de una ausencia y cancelar con motivo. La base impide la superposición aun con dos pedidos simultáneos; los bloqueos son un error, y salir del horario laboral pide confirmar.
+- Todo queda en la auditoría. Pendiente para más adelante: huecos libres sugeridos (RF-26) y el historial clínico (fase 2).
 
 ## Cómo correrlo en tu PC
 

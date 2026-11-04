@@ -150,6 +150,20 @@ async function cargarSemilla(url) {
     const prof = (
       await c.query("insert into profesionales (nombre, matricula) values ('Dra. Ejemplo', 'MP 0000') returning id")
     ).rows[0].id;
+    // Lunes a viernes de 9 a 13 y de 14 a 18; los viernes de 17 a 18 hay una capacitación fija.
+    for (let dia = 1; dia <= 5; dia++) {
+      for (const [inicio, fin] of [["09:00", "13:00"], ["14:00", "18:00"]]) {
+        await c.query(
+          "insert into horarios_laborales (profesional_id, dia_semana, hora_inicio, hora_fin) values ($1, $2, $3, $4)",
+          [prof, dia, inicio, fin],
+        );
+      }
+    }
+    await c.query(
+      `insert into bloqueos (profesional_id, tipo, dia_semana, hora_inicio, hora_fin, motivo)
+       values ($1, 'semanal', 5, '17:00', '18:00', 'Capacitación (dato de prueba)')`,
+      [prof],
+    );
     const usuarios = [
       [EMAIL_PROFESIONAL, "Dra. Ejemplo", "profesional", prof],
       [EMAIL_SECRETARIA, "Secretaria Ejemplo", "secretaria", null],

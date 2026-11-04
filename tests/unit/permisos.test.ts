@@ -39,7 +39,7 @@ describe("toda acción del servidor pasa por exigir() (documentación sección 6
     const funciones = [...fuente.matchAll(/export async function (\w+)[^{]*\{([\s\S]*?)\n\}/g)];
     expect(funciones.length).toBeGreaterThan(0);
     for (const [, nombre, cuerpo] of funciones) {
-      expect(cuerpo, `${nombre} debe llamar a exigir()`).toMatch(/exigir\(/);
+      expect(cuerpo, `${nombre} debe pasar por exigir() (directo o con autorizar())`).toMatch(/(exigir|autorizar|turnoAutorizado)\(/);
     }
   });
 });
