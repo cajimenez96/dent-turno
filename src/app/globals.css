@@ -1,0 +1,45 @@
+@import "tailwindcss";
+@import "../styles/theme.css";
+
+/* Tokens de docs/diseno/DESIGN.md. Reglas de uso y contrastes: docs/diseno/ACCESIBILIDAD.md */
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  background: var(--linear-void);
+}
+
+body {
+  background: var(--linear-void);
+  color: var(--linear-bone);
+  font-family: var(--linear-font);
+  font-size: 15px;
+  line-height: 1.6;
+  letter-spacing: -0.165px;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Foco visible siempre: contorno de 2 px en Mist (RNF-22 a 24). */
+:focus-visible {
+  outline: 2px solid var(--linear-mist);
+  outline-offset: 2px;
+}
+
+/* Áreas táctiles de al menos 44 × 44 px en pantallas táctiles (RNF-23). */
+@media (pointer: coarse) {
+  .objetivo-tactil {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

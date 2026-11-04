@@ -1,0 +1,5 @@
+#!/bin/sh
+# Pruebas de base de datos: necesitan Postgres en marcha (docker compose up -d) y TEST_DATABASE_URL, o el valor por defecto de .env.example.
+npm run test:db
+npm audit --audit-level=high
+npm run build
