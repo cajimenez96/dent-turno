@@ -1,6 +1,6 @@
 // Espejo tipado de migraciones/*.sql. El SQL de las migraciones manda: si cambiás una
 // tabla, escribí una migración nueva y actualizá este archivo.
-import { bigint, boolean, customType, date, integer, jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { bigint, boolean, customType, date, integer, jsonb, pgTable, smallint, text, time, timestamp, uuid } from "drizzle-orm/pg-core";
 
 const rangoDeTiempo = customType<{ data: string }>({
   dataType() {
@@ -91,6 +91,30 @@ export const turnos = pgTable("turnos", {
   horarioLiberado: boolean("horario_liberado").notNull().default(false),
   motivoCancelacion: text("motivo_cancelacion"),
   version: integer("version").notNull().default(1),
+  creadoPor: uuid("creado_por").references(() => usuarios.id),
+  creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const horariosLaborales = pgTable("horarios_laborales", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  profesionalId: uuid("profesional_id").notNull().references(() => profesionales.id),
+  diaSemana: smallint("dia_semana").notNull(),
+  horaInicio: time("hora_inicio").notNull(),
+  horaFin: time("hora_fin").notNull(),
+});
+
+export const bloqueos = pgTable("bloqueos", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  profesionalId: uuid("profesional_id").notNull().references(() => profesionales.id),
+  tipo: text("tipo").notNull(),
+  rango: rangoDeTiempo("rango"),
+  diaSemana: smallint("dia_semana"),
+  horaInicio: time("hora_inicio"),
+  horaFin: time("hora_fin"),
+  vigenteDesde: date("vigente_desde"),
+  vigenteHasta: date("vigente_hasta"),
+  motivo: text("motivo").notNull(),
+  anulado: boolean("anulado").notNull().default(false),
   creadoPor: uuid("creado_por").references(() => usuarios.id),
   creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
 });
