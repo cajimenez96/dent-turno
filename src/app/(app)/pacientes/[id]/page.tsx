@@ -7,7 +7,7 @@ import { exigirPagina, param } from "@/server/pagina";
 import { concesionesDe } from "@/server/auth/sesiones";
 import { puede } from "@/server/permisos";
 import { aFecha, etiquetaDiaCap, fechaDe, horaDe } from "@/server/tiempo";
-import { botonPrimario, EncabezadoPagina, EtiquetaEstado, tarjeta } from "@/app/componentes/ui";
+import { botonPrimario, botonSecundario, EncabezadoPagina, EtiquetaEstado, tarjeta } from "@/app/componentes/ui";
 import { FormularioPaciente } from "../formulario-paciente";
 import { DesactivarPaciente } from "./desactivar";
 
@@ -58,6 +58,14 @@ export default async function PaginaPaciente({ params, searchParams }: Props) {
           </dl>
         )}
       </section>
+
+      {puede(concesiones, "clinico.ver") ? (
+        <section className={tarjeta} aria-labelledby="h-historial">
+          <h2 id="h-historial" className="text-[16px] font-medium text-linear-paper">Historial clínico</h2>
+          <p className="mt-1 text-[14px] text-linear-fog">Trabajos realizados, piezas dentales y registro de cambios.</p>
+          <p className="mt-3"><Link href={`/pacientes/${p.id}/historial`} className={botonSecundario}>Ver historial clínico</Link></p>
+        </section>
+      ) : null}
 
       <section className={tarjeta} aria-labelledby="h-turnos">
         <h2 id="h-turnos" className="text-[16px] font-medium text-linear-paper">Turnos</h2>

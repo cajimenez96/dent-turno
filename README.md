@@ -15,7 +15,13 @@ Fase 1 (agenda):
 - **Pacientes:** alta, edición y búsqueda sin importar tildes; alerta de posibles duplicados (mismo documento, que no se puede repetir, o nombre muy parecido, que pide confirmar).
 - **Horario laboral y bloqueos** (menú Configuración): hasta dos franjas por día; bloqueos puntuales (vacaciones) o semanales (almuerzo). Un bloqueo que cae sobre turnos ya dados pide confirmación y no los cancela.
 - **Agenda semanal y turnos:** dar, mover, marcar atendido o ausente, liberar el horario de una ausencia y cancelar con motivo. La base impide la superposición aun con dos pedidos simultáneos; los bloqueos son un error, y salir del horario laboral pide confirmar.
-- Todo queda en la auditoría. Pendiente para más adelante: huecos libres sugeridos (RF-26) y el historial clínico (fase 2).
+- Todo queda en la auditoría.
+
+Fase 2 (historial clínico, desde el paciente → "Ver historial clínico"; solo con permiso clínico, la secretaria no lo ve):
+- **Trabajos con versiones:** al corregir un trabajo se ve primero qué cambia y se guarda como versión nueva; la anterior queda en el "Registro de cambios" y la base impide modificarla o borrarla. Eliminar solo oculta el trabajo, con motivo.
+- **Odontograma y ficha por diente:** mapa de piezas con numeración FDI (permanentes y temporarias); al elegir una pieza se ve todo lo que se le hizo.
+- **Atendidos sin trabajo:** la agenda lista los turnos atendidos que todavía no tienen trabajo registrado.
+- Leer una historia clínica queda en la auditoría. Pendiente para más adelante: huecos libres sugeridos (RF-26), cobros (fase 3).
 
 ## Cómo correrlo en tu PC
 
@@ -32,7 +38,7 @@ Ingresá con `doctora@ejemplo.test` (profesional) o `secretaria@ejemplo.test`; l
 | Comando | Qué hace |
 | --- | --- |
 | `npm run db:local` | Deja todo listo. Se puede repetir: no pisa nada. Si ya hay un Postgres en la URL de `.env.local` lo usa y no toca Docker; si no, corre `docker compose up -d --wait`. Crea `.env.local` si falta. |
-| `npm run db:semilla` | Carga los datos de prueba si todavía no están (12 pacientes y 11 turnos de la semana en curso). |
+| `npm run db:semilla` | Carga los datos de prueba si todavía no están (12 pacientes, 13 turnos y 3 trabajos clínicos). |
 | `npm run db:reiniciar` | Borra la base local y la rearma desde cero, con datos de prueba. |
 | `npm run db:detener` | Apaga el Postgres de Docker; los datos se conservan. |
 | `npm run db:migrar` | Solo aplica migraciones nuevas. |

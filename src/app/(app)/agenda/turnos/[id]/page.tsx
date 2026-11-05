@@ -6,7 +6,7 @@ import { exigirPagina } from "@/server/pagina";
 import { concesionesDe } from "@/server/auth/sesiones";
 import { puede } from "@/server/permisos";
 import { etiquetaDiaCap, fechaDe, horaDe } from "@/server/tiempo";
-import { EncabezadoPagina, EtiquetaEstado, tarjeta } from "@/app/componentes/ui";
+import { botonSecundario, EncabezadoPagina, EtiquetaEstado, tarjeta } from "@/app/componentes/ui";
 import { FormularioTurno } from "../../formulario-turno";
 import { CambiarEstado, CancelarTurno, LiberarHorario } from "./acciones-turno";
 
@@ -57,6 +57,14 @@ export default async function PaginaTurno({ params }: { params: Promise<{ id: st
             <CancelarTurno turnoId={t.id} version={t.version} />
           </section>
         </>
+      ) : null}
+
+      {puede(concesiones, "clinico.editar", t.profesionalId) && t.estado === "atendido" ? (
+        <section className={tarjeta} aria-labelledby="h-trabajo">
+          <h2 id="h-trabajo" className="text-[16px] font-medium text-linear-paper">Historial clínico</h2>
+          <p className="mb-3 mt-1 text-[14px] text-linear-fog">Registrá qué se hizo en esta atención.</p>
+          <Link href={`/pacientes/${t.pacienteId}/trabajos/nuevo?turno=${t.id}`} className={botonSecundario}>Registrar el trabajo de esta atención</Link>
+        </section>
       ) : null}
 
       {editar && (t.estado === "atendido" || t.estado === "ausente") ? (
