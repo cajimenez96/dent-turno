@@ -28,6 +28,11 @@ try {
     ["restricción anti-solapamiento de turnos", "select 1 from pg_constraint where conname = 'turnos_sin_solapamiento'"],
     ["auditoría inalterable (trigger)", "select 1 from pg_trigger where tgname = 'auditoria_inalterable'"],
     ["auditoría protegida contra TRUNCATE", "select 1 from pg_trigger where tgname = 'auditoria_sin_truncate'"],
+    ["cobros inalterables (trigger)", "select 1 from pg_trigger where tgname = 'cobros_inalterables'"],
+    ["imputaciones inalterables (trigger)", "select 1 from pg_trigger where tgname = 'imputaciones_inalterables'"],
+    ["control de imputaciones (trigger)", "select 1 from pg_trigger where tgname = 'imputaciones_controlar'"],
+    ["ningún cargo con más cobros aplicados que su monto", "select 1 where not exists (select 1 from v_saldo_cargo where saldo < 0)"],
+    ["ningún cobro con más aplicado que su monto", "select 1 where not exists (select 1 from cobros c where (select coalesce(sum(monto),0) from imputaciones where cobro_id = c.id) > c.monto)"],
     ["roles sembrados", "select 1 from roles having count(*) >= 2"],
   ];
   console.log("\nControles:");

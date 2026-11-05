@@ -7,10 +7,12 @@ import { registrarLecturaClinica } from "@/server/clinico/lectura";
 import { concesionesDe } from "@/server/auth/sesiones";
 import { puede } from "@/server/permisos";
 import { exigirPagina } from "@/server/pagina";
-import { fechaDe, horaDe } from "@/server/tiempo";
+import { sql } from "drizzle-orm";
+import { fechaDe, hoy, horaDe } from "@/server/tiempo";
 import { formatoMonto } from "@/server/dinero";
 import { EncabezadoPagina, tarjeta } from "@/app/componentes/ui";
 import { ListaPiezas } from "@/app/componentes/trabajo";
+import { FormularioCargo } from "../../cuenta/formularios";
 import { FormularioTrabajo } from "../formulario-trabajo";
 import { EliminarTrabajo } from "./eliminar";
 
@@ -32,6 +34,10 @@ export default async function PaginaTrabajo({ params }: { params: Promise<{ id: 
   if (!paciente) notFound();
   const editar = puede(concesiones, "clinico.editar", t.profesionalId);
   const versiones = await versionesTrabajo(db, t.id);
+  const cobrar = puede(concesiones, "cobros.registrar", t.profesionalId);
+  const cargoDelTrabajo = cobrar
+    ? (await db.execute<{ id: string }>(sql`select id from cargos where trabajo_id = ${t.id} and not anulado`)).rows[0]
+    : undefined;
   await registrarLecturaClinica(usuario.id, id, t.id);
 
   return (
@@ -45,6 +51,20 @@ export default async function PaginaTrabajo({ params }: { params: Promise<{ id: 
         <div className="mt-3"><ListaPiezas piezas={t.piezas} /></div>
         {t.monto ? <p className="mt-3 text-[13px] text-linear-fog">Monto informado: {formatoMonto(t.monto)}</p> : null}
       </section>
+
+      {cobrar ? (
+        <section className={tarjeta} aria-labelledby="h-cobro">
+          <h2 id="h-cobro" className="text-[16px] font-medium text-linear-paper">Cobro</h2>
+          {cargoDelTrabajo ? (
+            <p className="mt-2 text-[14px] text-linear-mist">Este trabajo ya está cargado en la cuenta. <Link href={`/pacientes/${id}/cuenta`} className="underline underline-offset-4">Ver la cuenta</Link></p>
+          ) : (
+            <>
+              <p className="mb-3 mt-1 text-[14px] text-linear-fog">Generá el cargo para poder registrar cobros. {t.monto ? "El monto viene de lo informado en el trabajo." : "Este trabajo no tiene monto: escribilo."}</p>
+              <FormularioCargo pacienteId={id} profesionalId={t.profesionalId} hoy={hoy()} origen="trabajo" trabajoId={t.id} concepto={t.descripcion.split("\n")[0].slice(0, 120)} monto={t.monto ? t.monto.replace(".", ",") : ""} boton="Generar el cargo" enlaceCuenta />
+            </>
+          )}
+        </section>
+      ) : null}
 
       {editar ? (
         <section className={tarjeta} aria-labelledby="h-editar">

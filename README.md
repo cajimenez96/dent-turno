@@ -21,7 +21,12 @@ Fase 2 (historial clínico, desde el paciente → "Ver historial clínico"; solo
 - **Trabajos con versiones:** al corregir un trabajo se ve primero qué cambia y se guarda como versión nueva; la anterior queda en el "Registro de cambios" y la base impide modificarla o borrarla. Eliminar solo oculta el trabajo, con motivo.
 - **Odontograma y ficha por diente:** mapa de piezas con numeración FDI (permanentes y temporarias); al elegir una pieza se ve todo lo que se le hizo.
 - **Atendidos sin trabajo:** la agenda lista los turnos atendidos que todavía no tienen trabajo registrado.
-- Leer una historia clínica queda en la auditoría. Pendiente para más adelante: huecos libres sugeridos (RF-26), cobros (fase 3).
+- Leer una historia clínica queda en la auditoría. 
+Fase 3 (cobros y reportes):
+- Desde el paciente → "Ver la cuenta": cargos, cobros parciales o totales, pagos a cuenta y saldo. El cargo de un trabajo se genera desde el trabajo; la ausencia se puede cobrar desde el turno.
+- Un cobro no se borra: se anula con otra fila negativa, con motivo y usuario. Un cargo anulado queda tachado. La base impide cobrar de más o aplicar un cobro a un cargo ajeno.
+- "Cobros": pacientes que deben y pacientes con saldo a favor. "Reportes": resumen mensual por profesional (lo cargado, lo cobrado por medio, atención y deuda de hoy). La secretaria registra cobros pero no anula ni ve reportes.
+- Pendiente para más adelante: huecos libres sugeridos (RF-26).
 
 ## Cómo correrlo en tu PC
 

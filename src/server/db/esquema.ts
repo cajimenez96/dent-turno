@@ -147,3 +147,42 @@ export const trabajoVersiones = pgTable(
   },
   (t) => [primaryKey({ columns: [t.trabajoId, t.numero] })],
 );
+
+export const cargos = pgTable("cargos", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  profesionalId: uuid("profesional_id").notNull().references(() => profesionales.id),
+  pacienteId: uuid("paciente_id").notNull().references(() => pacientes.id),
+  fecha: date("fecha").notNull(),
+  concepto: text("concepto").notNull(),
+  monto: numeric("monto", { precision: 12, scale: 2 }).notNull(),
+  origen: text("origen").notNull(),
+  trabajoId: uuid("trabajo_id").references(() => trabajos.id),
+  anulado: boolean("anulado").notNull().default(false),
+  anuladoMotivo: text("anulado_motivo"),
+  anuladoPor: uuid("anulado_por").references(() => usuarios.id),
+  anuladoAt: timestamp("anulado_at", { withTimezone: true }),
+  creadoPor: uuid("creado_por").references(() => usuarios.id),
+  creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const cobros = pgTable("cobros", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  profesionalId: uuid("profesional_id").notNull().references(() => profesionales.id),
+  pacienteId: uuid("paciente_id").notNull().references(() => pacientes.id),
+  fecha: date("fecha").notNull(),
+  monto: numeric("monto", { precision: 12, scale: 2 }).notNull(),
+  medio: text("medio").notNull(),
+  tipo: text("tipo").notNull(),
+  anulaCobroId: uuid("anula_cobro_id"),
+  motivo: text("motivo"),
+  creadoPor: uuid("creado_por").references(() => usuarios.id),
+  creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const imputaciones = pgTable("imputaciones", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  cobroId: uuid("cobro_id").notNull().references(() => cobros.id),
+  cargoId: uuid("cargo_id").notNull().references(() => cargos.id),
+  monto: numeric("monto", { precision: 12, scale: 2 }).notNull(),
+  creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
+});

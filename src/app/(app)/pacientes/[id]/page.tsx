@@ -67,6 +67,14 @@ export default async function PaginaPaciente({ params, searchParams }: Props) {
         </section>
       ) : null}
 
+      {puede(concesiones, "cobros.ver") ? (
+        <section className={tarjeta} aria-labelledby="h-cuenta">
+          <h2 id="h-cuenta" className="text-[16px] font-medium text-linear-paper">Cuenta</h2>
+          <p className="mt-1 text-[14px] text-linear-fog">Cargos, cobros y saldo.</p>
+          <p className="mt-3"><Link href={`/pacientes/${p.id}/cuenta`} className={botonSecundario}>Ver la cuenta</Link></p>
+        </section>
+      ) : null}
+
       <section className={tarjeta} aria-labelledby="h-turnos">
         <h2 id="h-turnos" className="text-[16px] font-medium text-linear-paper">Turnos</h2>
         {turnos.length === 0 ? (

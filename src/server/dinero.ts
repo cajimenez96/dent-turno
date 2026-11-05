@@ -22,3 +22,17 @@ export function formatoMonto(monto: string | null): string {
   const [entero, decimales] = monto.split(".");
   return `$ ${entero.replace(/\B(?=(\d{3})+(?!\d))/g, ".")},${decimales ?? "00"}`;
 }
+
+/** "12500.50" → 1250050. Los montos se reparten en centavos enteros para no arrastrar errores de redondeo. */
+export const aCentavos = (monto: string): number => {
+  const [entero, dec = ""] = monto.replace("-", "").split(".");
+  const n = Number(entero) * 100 + Number(dec.padEnd(2, "0").slice(0, 2));
+  return monto.startsWith("-") ? -n : n;
+};
+
+/** 1250050 → "12500.50". */
+export const deCentavos = (centavos: number): string => {
+  const signo = centavos < 0 ? "-" : "";
+  const n = Math.abs(centavos);
+  return `${signo}${Math.floor(n / 100)}.${String(n % 100).padStart(2, "0")}`;
+};

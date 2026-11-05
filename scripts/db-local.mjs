@@ -227,24 +227,46 @@ async function cargarSemilla(url) {
         );
       }
       if (n > 1) await c.query("update trabajos set version_actual = $2 where id = $1", [id, n]);
+      return id;
     };
-    await trabajo(pacientes[0], turnoLucia, [
+    const trabajoResina = await trabajo(pacientes[0], turnoLucia, [
       { dias: -7, descripcion: "Restauración con resina en el 36 (dato de prueba).", piezas: [{ pieza: "36", caras: ["M", "O"], tratamiento: "Restauración" }], monto: "12000.00" },
       { dias: -7, descripcion: "Restauración con resina en el 36 (dato de prueba).", piezas: [{ pieza: "36", caras: ["M", "O"], tratamiento: "Restauración" }], monto: "15000.00", resumen: "Monto informado: $ 12.000,00 → $ 15.000,00" },
     ]);
-    await trabajo(pacientes[0], null, [
+    const trabajoLimpieza = await trabajo(pacientes[0], null, [
       { dias: -90, descripcion: "Limpieza y control (dato de prueba).", piezas: [], monto: "8000.00" },
     ]);
     await trabajo(pacientes[2], null, [
       { dias: -30, descripcion: "Endodoncia del 46 y corona provisoria (dato de prueba).", piezas: [{ pieza: "46", caras: [], tratamiento: "Endodoncia" }, { pieza: "46", caras: ["O"], tratamiento: "Corona provisoria" }], monto: null },
     ]);
+    // Cuentas de ejemplo: una con deuda parcial, una saldada, una con ausencia sin cobrar y una con dinero a cuenta.
+    const cargo = async (paciente, dias, concepto, monto, origen, trabajoId = null) =>
+      (await c.query(
+        `insert into cargos (profesional_id, paciente_id, fecha, concepto, monto, origen, trabajo_id, creado_por)
+         values ($1, $2, current_date + $3::int, $4, $5, $6, $7, $8) returning id`,
+        [prof, paciente, dias, concepto, monto, origen, trabajoId, usuarioProfesional],
+      )).rows[0].id;
+    const cobro = async (paciente, dias, monto, medio, aplicar) => {
+      const id = (await c.query(
+        `insert into cobros (profesional_id, paciente_id, fecha, monto, medio, tipo, creado_por)
+         values ($1, $2, current_date + $3::int, $4, $5, 'cobro', $6) returning id`,
+        [prof, paciente, dias, monto, medio, usuarioProfesional],
+      )).rows[0].id;
+      for (const [cargoId, parte] of aplicar) await c.query("insert into imputaciones (cobro_id, cargo_id, monto) values ($1, $2, $3)", [id, cargoId, parte]);
+    };
+    const cargoResina = await cargo(pacientes[0], -7, "Restauración con resina en el 36", "15000.00", "trabajo", trabajoResina);
+    const cargoLimpieza = await cargo(pacientes[0], -90, "Limpieza y control", "8000.00", "trabajo", trabajoLimpieza);
+    await cobro(pacientes[0], -90, "8000.00", "efectivo", [[cargoLimpieza, "8000.00"]]);
+    await cobro(pacientes[0], -7, "10000.00", "transferencia", [[cargoResina, "10000.00"]]);
+    await cargo(pacientes[1], -5, "Turno ausente (dato de prueba)", "3000.00", "ausencia");
+    await cobro(pacientes[3], -2, "5000.00", "efectivo", []);
     await c.query(
       "insert into auditoria (accion, entidad, datos) values ('semilla', 'base', $1)",
       [JSON.stringify({ origen: "db-local", pacientes: PACIENTES.length, turnos: TURNOS.length, trabajos: 3 })],
     );
     await c.query("commit");
     console.log(
-      `Datos de prueba cargados: ${PACIENTES.length} pacientes, ${TURNOS.length} turnos (esta semana y la pasada) y 3 trabajos clínicos.\n` +
+      `Datos de prueba cargados: ${PACIENTES.length} pacientes, ${TURNOS.length} turnos (esta semana y la pasada), 3 trabajos clínicos y cuentas de ejemplo con cargos y cobros.\n` +
         `  ${EMAIL_PROFESIONAL}   (profesional)\n  ${EMAIL_SECRETARIA}  (secretaria)\n  Clave de ambos: ${CLAVE_DE_PRUEBA}`,
     );
   } catch (error) {
