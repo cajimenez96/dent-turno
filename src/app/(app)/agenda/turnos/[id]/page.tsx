@@ -5,8 +5,9 @@ import { obtenerTurno } from "@/server/agenda/turnos";
 import { exigirPagina } from "@/server/pagina";
 import { concesionesDe } from "@/server/auth/sesiones";
 import { puede } from "@/server/permisos";
-import { etiquetaDiaCap, fechaDe, horaDe } from "@/server/tiempo";
+import { etiquetaDiaCap, fechaDe, hoy, horaDe } from "@/server/tiempo";
 import { botonSecundario, EncabezadoPagina, EtiquetaEstado, tarjeta } from "@/app/componentes/ui";
+import { FormularioCargo } from "../../../pacientes/[id]/cuenta/formularios";
 import { FormularioTurno } from "../../formulario-turno";
 import { CambiarEstado, CancelarTurno, LiberarHorario } from "./acciones-turno";
 
@@ -64,6 +65,14 @@ export default async function PaginaTurno({ params }: { params: Promise<{ id: st
           <h2 id="h-trabajo" className="text-[16px] font-medium text-linear-paper">Historial clínico</h2>
           <p className="mb-3 mt-1 text-[14px] text-linear-fog">Registrá qué se hizo en esta atención.</p>
           <Link href={`/pacientes/${t.pacienteId}/trabajos/nuevo?turno=${t.id}`} className={botonSecundario}>Registrar el trabajo de esta atención</Link>
+        </section>
+      ) : null}
+
+      {puede(concesiones, "cobros.registrar", t.profesionalId) && t.estado === "ausente" ? (
+        <section className={tarjeta} aria-labelledby="h-cobrar-ausencia">
+          <h2 id="h-cobrar-ausencia" className="text-[16px] font-medium text-linear-paper">Cobrar la ausencia</h2>
+          <p className="mb-3 mt-1 text-[14px] text-linear-fog">Si querés cobrar este turno perdido, agregalo como cargo. Si no, no hagas nada.</p>
+          <FormularioCargo pacienteId={t.pacienteId} profesionalId={t.profesionalId} hoy={hoy()} origen="ausencia" concepto={`Turno ausente del ${fecha.split("-").reverse().join("/")}`} boton="Agregar el cargo" enlaceCuenta />
         </section>
       ) : null}
 

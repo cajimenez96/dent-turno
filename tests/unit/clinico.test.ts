@@ -47,3 +47,24 @@ describe("resumen de cambios", () => {
     ]);
   });
 });
+
+import { aCentavos, deCentavos } from "@/server/dinero";
+import { repartir } from "@/server/cobros/servicio";
+
+describe("centavos y reparto de cobros", () => {
+  it("convierte sin errores de redondeo", () => {
+    expect(aCentavos("12500.50")).toBe(1250050);
+    expect(aCentavos("0.07")).toBe(7);
+    expect(aCentavos("-3000.00")).toBe(-300000);
+    expect(deCentavos(1250050)).toBe("12500.50");
+    expect(deCentavos(-7)).toBe("-0.07");
+    expect(deCentavos(aCentavos("0.10") + aCentavos("0.20"))).toBe("0.30");
+  });
+  it("reparte en orden sin pasar el saldo de cada cargo", () => {
+    const cargos = [{ id: "a", saldo: "1000.00" }, { id: "b", saldo: "500.50" }, { id: "c", saldo: "300.00" }];
+    expect(repartir(1200_00, cargos)).toEqual([{ cargoId: "a", centavos: 100000 }, { cargoId: "b", centavos: 20000 }]);
+    expect(repartir(5000_00, cargos).reduce((s, x) => s + x.centavos, 0)).toBe(180050);
+    expect(repartir(0, cargos)).toEqual([]);
+    expect(repartir(100, [])).toEqual([]);
+  });
+});

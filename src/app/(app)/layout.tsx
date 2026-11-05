@@ -24,6 +24,8 @@ export default async function MarcoApp({ children }: { children: React.ReactNode
         <nav aria-label="Principal" className="-ml-3 flex flex-wrap items-center gap-1">
           {puede(concesiones, "agenda.ver") ? <Link href="/agenda" className={enlace}>Agenda</Link> : null}
           {puede(concesiones, "pacientes.ver") ? <Link href="/pacientes" className={enlace}>Pacientes</Link> : null}
+          {puede(concesiones, "cobros.ver") ? <Link href="/cobros" className={enlace}>Cobros</Link> : null}
+          {puede(concesiones, "reportes.ver") ? <Link href="/reportes" className={enlace}>Reportes</Link> : null}
           {puede(concesiones, "agenda.configurar") ? <Link href="/configuracion" className={enlace}>Configuración</Link> : null}
         </nav>
         <div className="flex items-center gap-3">
