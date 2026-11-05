@@ -136,6 +136,9 @@ const TURNOS = [
   [3, 14, 0, 120, 8, "programado"],
   [4, 10, 0, 60, 9, "programado"],
   [4, 11, 30, 60, 10, "programado"],
+  // Semana pasada, ya atendidos: el de Lucía tiene trabajo cargado; el de Martín no (aparece en "atendidos sin trabajo").
+  [-7, 9, 0, 60, 0, "atendido"],
+  [-7, 10, 30, 60, 1, "atendido"],
 ];
 
 async function cargarSemilla(url) {
@@ -206,13 +209,42 @@ async function cargarSemilla(url) {
         [dia, hora, min, prof, pacientes[p], duracion, estado, usuarioProfesional],
       );
     }
+    // Historial clínico de ejemplo: uno corregido (versión 2), uno sin piezas y uno de la dentición permanente con dos piezas.
+    const turnoLucia = (
+      await c.query("select id from turnos where paciente_id = $1 and estado = 'atendido'", [pacientes[0]])
+    ).rows[0].id;
+    const trabajo = async (paciente, turno, versiones) => {
+      const id = (
+        await c.query("insert into trabajos (profesional_id, paciente_id, turno_id) values ($1, $2, $3) returning id", [prof, paciente, turno])
+      ).rows[0].id;
+      let n = 0;
+      for (const v of versiones) {
+        n += 1;
+        await c.query(
+          `insert into trabajo_versiones (trabajo_id, numero, fecha, descripcion, piezas, monto_informado, editado_por, resumen_cambio)
+           values ($1, $2, current_date + $3::int, $4, $5::jsonb, $6, $7, $8)`,
+          [id, n, v.dias, v.descripcion, JSON.stringify(v.piezas), v.monto, usuarioProfesional, v.resumen ?? null],
+        );
+      }
+      if (n > 1) await c.query("update trabajos set version_actual = $2 where id = $1", [id, n]);
+    };
+    await trabajo(pacientes[0], turnoLucia, [
+      { dias: -7, descripcion: "Restauración con resina en el 36 (dato de prueba).", piezas: [{ pieza: "36", caras: ["M", "O"], tratamiento: "Restauración" }], monto: "12000.00" },
+      { dias: -7, descripcion: "Restauración con resina en el 36 (dato de prueba).", piezas: [{ pieza: "36", caras: ["M", "O"], tratamiento: "Restauración" }], monto: "15000.00", resumen: "Monto informado: $ 12.000,00 → $ 15.000,00" },
+    ]);
+    await trabajo(pacientes[0], null, [
+      { dias: -90, descripcion: "Limpieza y control (dato de prueba).", piezas: [], monto: "8000.00" },
+    ]);
+    await trabajo(pacientes[2], null, [
+      { dias: -30, descripcion: "Endodoncia del 46 y corona provisoria (dato de prueba).", piezas: [{ pieza: "46", caras: [], tratamiento: "Endodoncia" }, { pieza: "46", caras: ["O"], tratamiento: "Corona provisoria" }], monto: null },
+    ]);
     await c.query(
       "insert into auditoria (accion, entidad, datos) values ('semilla', 'base', $1)",
-      [JSON.stringify({ origen: "db-local", pacientes: PACIENTES.length, turnos: TURNOS.length })],
+      [JSON.stringify({ origen: "db-local", pacientes: PACIENTES.length, turnos: TURNOS.length, trabajos: 3 })],
     );
     await c.query("commit");
     console.log(
-      `Datos de prueba cargados: ${PACIENTES.length} pacientes y ${TURNOS.length} turnos de esta semana.\n` +
+      `Datos de prueba cargados: ${PACIENTES.length} pacientes, ${TURNOS.length} turnos (esta semana y la pasada) y 3 trabajos clínicos.\n` +
         `  ${EMAIL_PROFESIONAL}   (profesional)\n  ${EMAIL_SECRETARIA}  (secretaria)\n  Clave de ambos: ${CLAVE_DE_PRUEBA}`,
     );
   } catch (error) {

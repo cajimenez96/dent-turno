@@ -1,6 +1,6 @@
 // Espejo tipado de migraciones/*.sql. El SQL de las migraciones manda: si cambiás una
 // tabla, escribí una migración nueva y actualizá este archivo.
-import { bigint, boolean, customType, date, integer, jsonb, pgTable, smallint, text, time, timestamp, uuid } from "drizzle-orm/pg-core";
+import { bigint, boolean, customType, date, integer, jsonb, numeric, pgTable, primaryKey, smallint, text, time, timestamp, uuid } from "drizzle-orm/pg-core";
 
 const rangoDeTiempo = customType<{ data: string }>({
   dataType() {
@@ -118,3 +118,32 @@ export const bloqueos = pgTable("bloqueos", {
   creadoPor: uuid("creado_por").references(() => usuarios.id),
   creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const trabajos = pgTable("trabajos", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  profesionalId: uuid("profesional_id").notNull().references(() => profesionales.id),
+  pacienteId: uuid("paciente_id").notNull().references(() => pacientes.id),
+  turnoId: uuid("turno_id").references(() => turnos.id),
+  versionActual: integer("version_actual").notNull().default(1),
+  eliminado: boolean("eliminado").notNull().default(false),
+  eliminadoMotivo: text("eliminado_motivo"),
+  eliminadoPor: uuid("eliminado_por").references(() => usuarios.id),
+  eliminadoAt: timestamp("eliminado_at", { withTimezone: true }),
+  creadoAt: timestamp("creado_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const trabajoVersiones = pgTable(
+  "trabajo_versiones",
+  {
+    trabajoId: uuid("trabajo_id").notNull().references(() => trabajos.id),
+    numero: integer("numero").notNull(),
+    fecha: date("fecha").notNull(),
+    descripcion: text("descripcion").notNull(),
+    piezas: jsonb("piezas").notNull().default([]),
+    montoInformado: numeric("monto_informado", { precision: 12, scale: 2 }),
+    editadoPor: uuid("editado_por").references(() => usuarios.id),
+    editadoAt: timestamp("editado_at", { withTimezone: true }).notNull().defaultNow(),
+    resumenCambio: text("resumen_cambio"),
+  },
+  (t) => [primaryKey({ columns: [t.trabajoId, t.numero] })],
+);

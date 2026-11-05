@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getDb } from "@/server/db/cliente";
 import { agendaEntre, type BloqueoDeAgenda, type TurnoDeAgenda } from "@/server/agenda/turnos";
+import { atendidosSinTrabajo } from "@/server/clinico/trabajos";
 import { horarioLaboral } from "@/server/agenda/configuracion";
 import { exigirPagina, param, profesionalActual } from "@/server/pagina";
 import { aInstante, diaIso, esFecha, etiquetaDia, etiquetaDiaCap, etiquetaSemana, fechaDe, horaDe, hoy, lunesDe, sumarDias } from "@/server/tiempo";
@@ -38,6 +39,7 @@ export default async function PaginaAgenda({ searchParams }: Props) {
     concesionesDe(usuario.id),
   ]);
   const puedeEditar = puede(concesiones, "agenda.editar", actual.id);
+  const sinTrabajo = puede(concesiones, "clinico.editar", actual.id) ? await atendidosSinTrabajo(db, actual.id) : [];
   const hoyFecha = hoy();
   const nuevoId = param(q.nuevo);
   const prof = `&prof=${actual.id}`;
@@ -92,6 +94,23 @@ export default async function PaginaAgenda({ searchParams }: Props) {
           </form>
         ) : null}
       </div>
+
+      {sinTrabajo.length > 0 ? (
+        <section className={tarjeta} aria-labelledby="h-sin-trabajo">
+          <h2 id="h-sin-trabajo" className="text-[16px] font-medium text-linear-paper">Atendidos sin trabajo registrado ({sinTrabajo.length})</h2>
+          <p className="mt-1 text-[14px] text-linear-fog">Para que el historial quede completo, registrá lo que se hizo en cada atención.</p>
+          <ul className="mt-2 divide-y divide-linear-graphite">
+            {sinTrabajo.map((s) => (
+              <li key={s.id}>
+                <Link href={`/pacientes/${s.pacienteId}/trabajos/nuevo?turno=${s.id}`} className="objetivo-tactil flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 hover:bg-linear-obsidian">
+                  <span className="text-[15px] text-linear-bone">{s.paciente}</span>
+                  <span className="text-[13px] text-linear-fog">{etiquetaDiaCap(fechaDe(s.inicio))} · {horaDe(s.inicio)} · Registrar trabajo</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
 
       {turnos.length === 0 && bloqueos.length === 0 ? (
         <p className="text-[14px] text-linear-fog">
