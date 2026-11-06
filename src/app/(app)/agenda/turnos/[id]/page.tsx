@@ -26,34 +26,34 @@ export default async function PaginaTurno({ params }: { params: Promise<{ id: st
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <p><Link href={`/agenda?prof=${t.profesionalId}&semana=${fecha}`} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">← Volver a la agenda</Link></p>
+      <p><Link href={`/agenda?prof=${t.profesionalId}&semana=${fecha}`} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">← Volver a la agenda</Link></p>
       <EncabezadoPagina titulo={t.paciente} subtitulo={t.telefono ? `Teléfono ${t.telefono}` : "Sin teléfono cargado"} />
 
       <section className={tarjeta} aria-label="Datos del turno">
         <dl className="grid gap-3 sm:grid-cols-3">
-          <div><dt className="text-[13px] text-linear-fog">Día</dt><dd className="text-[15px] text-linear-paper">{etiquetaDiaCap(fecha)}</dd></div>
-          <div><dt className="text-[13px] text-linear-fog">Horario</dt><dd className="font-linear-mono text-[15px] text-linear-paper">{horaDe(t.inicio)} a {horaDe(t.fin)}</dd></div>
-          <div><dt className="text-[13px] text-linear-fog">Estado</dt><dd><EtiquetaEstado estado={t.estado} liberado={t.horarioLiberado} /></dd></div>
+          <div><dt className="text-[13px] text-steel">Día</dt><dd className="text-[15px] text-ink">{etiquetaDiaCap(fecha)}</dd></div>
+          <div><dt className="text-[13px] text-steel">Horario</dt><dd className="font-family-2 text-[15px] text-ink">{horaDe(t.inicio)} a {horaDe(t.fin)}</dd></div>
+          <div><dt className="text-[13px] text-steel">Estado</dt><dd><EtiquetaEstado estado={t.estado} liberado={t.horarioLiberado} /></dd></div>
         </dl>
-        {t.motivoCancelacion ? <p className="mt-3 text-[14px] text-linear-mist">Motivo de la cancelación: {t.motivoCancelacion}</p> : null}
-        <p className="mt-3"><Link href={`/pacientes/${t.pacienteId}`} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">Ver datos del paciente</Link></p>
+        {t.motivoCancelacion ? <p className="mt-3 text-[14px] text-slate">Motivo de la cancelación: {t.motivoCancelacion}</p> : null}
+        <p className="mt-3"><Link href={`/pacientes/${t.pacienteId}`} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">Ver datos del paciente</Link></p>
       </section>
 
       {editar && t.estado === "programado" ? (
         <>
           <section className={`${tarjeta} space-y-3`} aria-labelledby="h-estado">
-            <h2 id="h-estado" className="text-[16px] font-medium text-linear-paper">¿Qué pasó con este turno?</h2>
+            <h2 id="h-estado" className="text-[16px] font-medium text-ink">¿Qué pasó con este turno?</h2>
             <div className="flex flex-wrap gap-3">
               <CambiarEstado turnoId={t.id} version={t.version} estado="atendido" etiqueta="Marcar como atendido" estilo="primario" />
               <CambiarEstado turnoId={t.id} version={t.version} estado="ausente" etiqueta="Marcar como ausente" />
             </div>
           </section>
           <section className={tarjeta} aria-labelledby="h-mover">
-            <h2 id="h-mover" className="mb-4 text-[16px] font-medium text-linear-paper">Mover a otro horario</h2>
+            <h2 id="h-mover" className="mb-4 text-[16px] font-medium text-ink">Mover a otro horario</h2>
             <FormularioTurno modo="mover" profesionalId={t.profesionalId} turnoId={t.id} version={t.version} fecha={fecha} hora={horaDe(t.inicio)} duracionMin={duracion} />
           </section>
           <section className={tarjeta} aria-labelledby="h-cancelar">
-            <h2 id="h-cancelar" className="mb-4 text-[16px] font-medium text-linear-paper">Cancelar</h2>
+            <h2 id="h-cancelar" className="mb-4 text-[16px] font-medium text-ink">Cancelar</h2>
             <CancelarTurno turnoId={t.id} version={t.version} />
           </section>
         </>
@@ -61,15 +61,15 @@ export default async function PaginaTurno({ params }: { params: Promise<{ id: st
 
       {puede(concesiones, "clinico.editar", t.profesionalId) && t.estado === "atendido" ? (
         <section className={tarjeta} aria-labelledby="h-trabajo">
-          <h2 id="h-trabajo" className="text-[16px] font-medium text-linear-paper">Historial clínico</h2>
-          <p className="mb-3 mt-1 text-[14px] text-linear-fog">Registrá qué se hizo en esta atención.</p>
+          <h2 id="h-trabajo" className="text-[16px] font-medium text-ink">Historial clínico</h2>
+          <p className="mb-3 mt-1 text-[14px] text-steel">Registrá qué se hizo en esta atención.</p>
           <Link href={`/pacientes/${t.pacienteId}/trabajos/nuevo?turno=${t.id}`} className={botonSecundario}>Registrar el trabajo de esta atención</Link>
         </section>
       ) : null}
 
       {editar && (t.estado === "atendido" || t.estado === "ausente") ? (
         <section className={`${tarjeta} space-y-4`} aria-labelledby="h-corregir">
-          <h2 id="h-corregir" className="text-[16px] font-medium text-linear-paper">Corregir o completar</h2>
+          <h2 id="h-corregir" className="text-[16px] font-medium text-ink">Corregir o completar</h2>
           <CambiarEstado turnoId={t.id} version={t.version} estado={t.estado === "atendido" ? "ausente" : "atendido"} etiqueta={t.estado === "atendido" ? "Cargué mal: fue ausente" : "Cargué mal: fue atendido"} />
           {t.estado === "ausente" && !t.horarioLiberado ? <LiberarHorario turnoId={t.id} version={t.version} /> : null}
         </section>

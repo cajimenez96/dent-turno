@@ -46,7 +46,7 @@ export function LiberarHorario({ turnoId, version }: { turnoId: string; version:
       <input type="hidden" name="turnoId" value={turnoId} />
       <input type="hidden" name="version" value={version} />
       <button type="submit" disabled={pendiente} className={botonSecundario}>{pendiente ? "Liberando…" : "Liberar el horario"}</button>
-      <p className="text-[13px] text-linear-fog">Deja el lugar disponible para otro paciente. No se puede deshacer.</p>
+      <p className="text-[13px] text-steel">Deja el lugar disponible para otro paciente. No se puede deshacer.</p>
       <AvisoError error={s.error} />
     </form>
   );

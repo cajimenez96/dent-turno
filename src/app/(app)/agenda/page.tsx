@@ -22,8 +22,8 @@ export default async function PaginaAgenda({ searchParams }: Props) {
   if (!actual) {
     return (
       <section className={tarjeta}>
-        <h1 className="text-[20px] font-medium text-linear-paper">No hay agenda para mostrar</h1>
-        <p className="mt-2 text-[15px] text-linear-fog">Tu usuario no tiene ningún profesional asignado. Pedile a quien administra el sistema que te asigne uno.</p>
+        <h1 className="text-[20px] font-medium text-ink">No hay agenda para mostrar</h1>
+        <p className="mt-2 text-[15px] text-steel">Tu usuario no tiene ningún profesional asignado. Pedile a quien administra el sistema que te asigne uno.</p>
       </section>
     );
   }
@@ -84,8 +84,8 @@ export default async function PaginaAgenda({ searchParams }: Props) {
         {profesionales.length > 1 ? (
           <form action="/agenda" className="ml-auto flex items-center gap-2">
             <input type="hidden" name="semana" value={lunes} />
-            <label htmlFor="prof" className="text-[13px] text-linear-mist">Profesional</label>
-            <select id="prof" name="prof" defaultValue={actual.id} className="objetivo-tactil rounded-[6px] border border-linear-ash bg-linear-obsidian px-3 py-2 text-[15px] text-linear-paper">
+            <label htmlFor="prof" className="text-[13px] text-slate">Profesional</label>
+            <select id="prof" name="prof" defaultValue={actual.id} className="objetivo-tactil rounded-md border border-stone bg-canvas px-3 py-2 text-[15px] text-ink">
               {profesionales.map((p) => (
                 <option key={p.id} value={p.id}>{p.nombre}</option>
               ))}
@@ -97,14 +97,14 @@ export default async function PaginaAgenda({ searchParams }: Props) {
 
       {sinTrabajo.length > 0 ? (
         <section className={tarjeta} aria-labelledby="h-sin-trabajo">
-          <h2 id="h-sin-trabajo" className="text-[16px] font-medium text-linear-paper">Atendidos sin trabajo registrado ({sinTrabajo.length})</h2>
-          <p className="mt-1 text-[14px] text-linear-fog">Para que el historial quede completo, registrá lo que se hizo en cada atención.</p>
-          <ul className="mt-2 divide-y divide-linear-graphite">
+          <h2 id="h-sin-trabajo" className="text-[16px] font-medium text-ink">Atendidos sin trabajo registrado ({sinTrabajo.length})</h2>
+          <p className="mt-1 text-[14px] text-steel">Para que el historial quede completo, registrá lo que se hizo en cada atención.</p>
+          <ul className="mt-2 divide-y divide-hairline">
             {sinTrabajo.map((s) => (
               <li key={s.id}>
-                <Link href={`/pacientes/${s.pacienteId}/trabajos/nuevo?turno=${s.id}`} className="objetivo-tactil flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 hover:bg-linear-obsidian">
-                  <span className="text-[15px] text-linear-bone">{s.paciente}</span>
-                  <span className="text-[13px] text-linear-fog">{etiquetaDiaCap(fechaDe(s.inicio))} · {horaDe(s.inicio)} · Registrar trabajo</span>
+                <Link href={`/pacientes/${s.pacienteId}/trabajos/nuevo?turno=${s.id}`} className="objetivo-tactil flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 hover:bg-surface">
+                  <span className="text-[15px] text-ink">{s.paciente}</span>
+                  <span className="text-[13px] text-steel">{etiquetaDiaCap(fechaDe(s.inicio))} · {horaDe(s.inicio)} · Registrar trabajo</span>
                 </Link>
               </li>
             ))}
@@ -113,7 +113,7 @@ export default async function PaginaAgenda({ searchParams }: Props) {
       ) : null}
 
       {turnos.length === 0 && bloqueos.length === 0 ? (
-        <p className="text-[14px] text-linear-fog">
+        <p className="text-[14px] text-steel">
           {franjas.length === 0 ? "Esta semana no hay turnos. Cargá el horario laboral en Configuración para ver cuándo atiende." : "Esta semana no hay turnos todavía."}
         </p>
       ) : null}
@@ -122,19 +122,19 @@ export default async function PaginaAgenda({ searchParams }: Props) {
         {dias.map((d) => (
           <section key={d.fecha} aria-labelledby={`dia-${d.fecha}`} className={tarjeta}>
             <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-              <h2 id={`dia-${d.fecha}`} className="text-[16px] font-medium text-linear-paper">
+              <h2 id={`dia-${d.fecha}`} className="text-[16px] font-medium text-ink">
                 {etiquetaDiaCap(d.fecha)}
-                {d.fecha === hoyFecha ? <span className="ml-2 rounded-[6px] border border-linear-ash px-1.5 py-0.5 text-[12px] font-normal normal-case text-linear-mist">Hoy</span> : null}
+                {d.fecha === hoyFecha ? <span className="ml-2 rounded-sm bg-surface border border-hairline px-1.5 py-0.5 text-[12px] font-medium normal-case text-slate">Hoy</span> : null}
               </h2>
-              <p className="text-[13px] text-linear-fog">
+              <p className="text-[13px] text-steel">
                 {d.franjas.length > 0 ? `Atiende ${d.franjas.map((f) => `${f.inicio} a ${f.fin}`).join(" y ")}` : franjas.length > 0 ? "No atiende" : ""}
               </p>
             </div>
 
             {d.items.length === 0 ? (
-              <p className="mt-3 text-[14px] text-linear-fog">Sin turnos.</p>
+              <p className="mt-3 text-[14px] text-steel">Sin turnos.</p>
             ) : (
-              <ul className="mt-3 divide-y divide-linear-graphite">
+              <ul className="mt-3 divide-y divide-hairline">
                 {d.items.map((it) =>
                   it.tipo === "turno" ? (
                     <FilaTurno key={it.t.id} t={it.t} nuevo={it.t.id === nuevoId} />
@@ -147,7 +147,7 @@ export default async function PaginaAgenda({ searchParams }: Props) {
 
             {puedeEditar ? (
               <p className="mt-3">
-                <Link href={`/agenda/nuevo?prof=${actual.id}&fecha=${d.fecha}`} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">
+                <Link href={`/agenda/nuevo?prof=${actual.id}&fecha=${d.fecha}`} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">
                   Agregar turno el {etiquetaDia(d.fecha)}
                 </Link>
               </p>
@@ -165,14 +165,14 @@ function FilaTurno({ t, nuevo }: { t: TurnoDeAgenda; nuevo: boolean }) {
     <li>
       <Link
         href={`/agenda/turnos/${t.id}`}
-        className="objetivo-tactil -mx-2 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-[6px] px-2 py-3 hover:bg-linear-obsidian"
+        className="objetivo-tactil -mx-2 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-md px-2 py-3 hover:bg-surface"
       >
-        <span className={`w-[112px] shrink-0 font-linear-mono text-[14px] ${apagado ? "text-linear-fog line-through" : "text-linear-paper"}`}>
+        <span className={`w-[112px] shrink-0 font-family-2 text-[14px] ${apagado ? "text-steel line-through" : "text-ink"}`}>
           {hora(t.inicio)} a {hora(t.fin)}
         </span>
-        <span className={`order-last min-w-0 basis-full text-[15px] sm:order-none sm:basis-0 sm:flex-1 ${apagado ? "text-linear-fog" : "text-linear-bone"}`}>
+        <span className={`order-last min-w-0 basis-full text-[15px] sm:order-none sm:basis-0 sm:flex-1 ${apagado ? "text-steel" : "text-ink"}`}>
           {t.paciente}
-          {nuevo ? <span className="ml-2 text-[13px] text-linear-teal">· guardado</span> : null}
+          {nuevo ? <span className="ml-2 text-[13px] text-success-text">· guardado</span> : null}
         </span>
         <span className="ml-auto sm:ml-0"><EtiquetaEstado estado={t.estado} liberado={t.horarioLiberado} /></span>
       </Link>
@@ -186,9 +186,9 @@ function FilaBloqueo({ b, ini, fin }: { b: BloqueoDeAgenda; ini: Date; fin: Date
   const h = b.hasta > fin ? fin : b.hasta;
   return (
     <li className="flex flex-wrap items-center gap-x-4 gap-y-1 py-3">
-      <span className="w-[112px] shrink-0 font-linear-mono text-[14px] text-linear-fog">{todoElDia ? "Todo el día" : `${hora(d)} a ${hora(h)}`}</span>
-      <span className="order-last min-w-0 basis-full text-[15px] text-linear-mist sm:order-none sm:basis-0 sm:flex-1">{b.motivo}</span>
-      <span className="ml-auto inline-flex sm:ml-0 items-center gap-1.5 text-[13px] text-linear-fog">
+      <span className="w-[112px] shrink-0 font-family-2 text-[14px] text-steel">{todoElDia ? "Todo el día" : `${hora(d)} a ${hora(h)}`}</span>
+      <span className="order-last min-w-0 basis-full text-[15px] text-slate sm:order-none sm:basis-0 sm:flex-1">{b.motivo}</span>
+      <span className="ml-auto inline-flex sm:ml-0 items-center gap-1.5 text-[13px] text-steel">
         <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="currentColor">
           <path d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1ZM3.5 8a4.5 4.5 0 0 1 7.3-3.5l-6.3 6.3A4.5 4.5 0 0 1 3.5 8Zm1.7 3.5 6.3-6.3a4.5 4.5 0 0 1-6.3 6.3Z" />
         </svg>

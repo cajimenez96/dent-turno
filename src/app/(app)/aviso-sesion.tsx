@@ -54,19 +54,19 @@ export function AvisoSesion({ msHastaCierre }: { msHastaCierre: number }) {
     <dialog
       ref={dialogo}
       aria-labelledby="titulo-aviso"
-      className="m-auto w-[min(92vw,24rem)] rounded-[12px] border border-linear-smoke bg-linear-carbon p-6 text-linear-bone backdrop:bg-black/60"
+      className="m-auto w-[min(92vw,24rem)] rounded-lg border border-hairline bg-canvas p-6 text-ink backdrop:bg-black/60"
     >
-      <h2 id="titulo-aviso" className="text-[20px] font-medium tracking-[-0.24px] text-linear-paper">
+      <h2 id="titulo-aviso" className="text-[20px] font-medium tracking-[-0.24px] text-ink">
         ¿Seguís trabajando?
       </h2>
-      <p className="mt-2 text-[15px] text-linear-fog" role="timer">
+      <p className="mt-2 text-[15px] text-steel" role="timer">
         Tu sesión se va a cerrar en {minutos}:{String(segundos).padStart(2, "0")} por inactividad.
       </p>
       <div className="mt-6 flex flex-wrap justify-end gap-2">
         <form action={salir}>
           <button
             type="submit"
-            className="objetivo-tactil rounded-[6px] border border-linear-ash px-4 py-2.5 text-[15px] text-linear-mist hover:border-linear-fog"
+            className="objetivo-tactil rounded-full border border-stone px-4 py-2.5 text-[15px] text-ink hover:bg-surface"
           >
             Salir
           </button>
@@ -75,7 +75,7 @@ export function AvisoSesion({ msHastaCierre }: { msHastaCierre: number }) {
           type="button"
           autoFocus
           onClick={continuar}
-          className="objetivo-tactil rounded-[6px] bg-linear-acid-lime px-4 py-2.5 text-[15px] font-medium text-linear-void hover:brightness-95"
+          className="objetivo-tactil rounded-full bg-primary px-4 py-2.5 text-[15px] font-medium text-on-primary hover:bg-charcoal"
         >
           Seguir trabajando
         </button>

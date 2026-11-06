@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 320" role="img" aria-label="Logo de la doctora (reemplazar este archivo)">
+  <rect x="8" y="8" width="304" height="304" rx="24" fill="#fafafa" stroke="#888888" stroke-width="2" stroke-dasharray="10 8"/>
+  <text x="160" y="148" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" fill="#0a0a0a">LOGO DE LA DOCTORA</text>
+  <text x="160" y="180" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#5a5a5c">Marcador de posición:</text>
+  <text x="160" y="202" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" fill="#5a5a5c">reemplazar public/logo-doctora.svg</text>
+</svg>

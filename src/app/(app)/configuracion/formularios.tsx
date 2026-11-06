@@ -26,26 +26,26 @@ export function FormularioHorario({ profesionalId, franjas }: { profesionalId: s
           const error = campos[`${dia}`];
           return (
             <div key={dia} className="grid items-start gap-x-4 gap-y-2 sm:grid-cols-[110px_1fr]">
-              <p className="pt-2.5 text-[15px] text-linear-bone">{nombre}</p>
+              <p className="pt-2.5 text-[15px] text-ink">{nombre}</p>
               <div>
                 <div className="flex flex-wrap gap-x-6 gap-y-2">
                   {[0, 1].map((n) => (
                     <div key={n} className="flex items-center gap-2">
                       <label className="sr-only" htmlFor={`inicio-${dia}-${n}`}>{nombre}, {n === 0 ? "mañana" : "tarde"}, desde</label>
                       <input id={`inicio-${dia}-${n}`} name={`inicio-${dia}-${n}`} type="time" defaultValue={valor(dia, n, "inicio")} className={`${claseCampo} !mt-0 w-[120px]`} aria-invalid={error ? true : undefined} />
-                      <span aria-hidden="true" className="text-linear-fog">a</span>
+                      <span aria-hidden="true" className="text-steel">a</span>
                       <label className="sr-only" htmlFor={`fin-${dia}-${n}`}>{nombre}, {n === 0 ? "mañana" : "tarde"}, hasta</label>
                       <input id={`fin-${dia}-${n}`} name={`fin-${dia}-${n}`} type="time" defaultValue={valor(dia, n, "fin")} className={`${claseCampo} !mt-0 w-[120px]`} aria-invalid={error ? true : undefined} />
                     </div>
                   ))}
                 </div>
-                {error ? <p className="mt-1 text-[13px] text-linear-coral-red">{error}</p> : null}
+                {error ? <p className="mt-1 text-[13px] text-danger-text">{error}</p> : null}
               </div>
             </div>
           );
         })}
       </fieldset>
-      <p className="text-[13px] text-linear-fog">Dejá las dos horas vacías en los días que no atiende. Cada día admite hasta dos franjas (por ejemplo mañana y tarde).</p>
+      <p className="text-[13px] text-steel">Dejá las dos horas vacías en los días que no atiende. Cada día admite hasta dos franjas (por ejemplo mañana y tarde).</p>
       {!Object.keys(campos).length ? <AvisoError error={s.error} /> : null}
       <AvisoHecho texto={s.hecho} />
       <button type="submit" disabled={pendiente} className={botonPrimario}>{pendiente ? "Guardando…" : "Guardar horario"}</button>
@@ -65,11 +65,11 @@ export function FormularioBloqueo({ profesionalId }: { profesionalId: string }) 
     <form action={accion} noValidate aria-busy={pendiente} className="space-y-4">
       <input type="hidden" name="profesionalId" value={profesionalId} />
       <fieldset>
-        <legend className="text-[13px] font-medium text-linear-mist">Tipo de bloqueo</legend>
+        <legend className="text-[13px] font-medium text-slate">Tipo de bloqueo</legend>
         <div className="mt-2 flex flex-wrap gap-x-6 gap-y-1">
           {[["puntual", "Días o fechas puntuales (vacaciones, un congreso)"], ["semanal", "Todas las semanas (almuerzo, reunión fija)"]].map(([valor, texto]) => (
-            <label key={valor} className="objetivo-tactil flex items-center gap-2 text-[15px] text-linear-bone">
-              <input type="radio" name="tipo" value={valor} checked={tipo === valor} onChange={() => setTipo(valor as "puntual" | "semanal")} className="h-4 w-4 accent-[#e4f222]" />
+            <label key={valor} className="objetivo-tactil flex items-center gap-2 text-[15px] text-ink">
+              <input type="radio" name="tipo" value={valor} checked={tipo === valor} onChange={() => setTipo(valor as "puntual" | "semanal")} className="h-4 w-4 accent-primary" />
               {texto}
             </label>
           ))}

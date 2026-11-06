@@ -42,37 +42,37 @@ export default async function PaginaHistorial({ params, searchParams }: Props) {
 
   return (
     <div className="space-y-6">
-      <p><Link href={`/pacientes/${id}`} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">← Volver al paciente</Link></p>
+      <p><Link href={`/pacientes/${id}`} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">← Volver al paciente</Link></p>
       <EncabezadoPagina
         titulo={`Historial de ${paciente.apellido}, ${paciente.nombre}`}
         subtitulo="Cada vez que se corrige un trabajo se guarda una versión nueva; la anterior no se pierde."
         accion={editar ? <Link href={`/pacientes/${id}/trabajos/nuevo`} className={botonPrimario}>Registrar trabajo</Link> : null}
       />
-      {param(q.guardado) ? <p role="status" className="text-[14px] text-linear-pulse-green">Cambios guardados.</p> : null}
-      {param(q.eliminado) ? <p role="status" className="text-[14px] text-linear-pulse-green">Trabajo eliminado. Queda en el registro de cambios.</p> : null}
+      {param(q.guardado) ? <p role="status" className="text-[14px] text-success-text">Cambios guardados.</p> : null}
+      {param(q.eliminado) ? <p role="status" className="text-[14px] text-success-text">Trabajo eliminado. Queda en el registro de cambios.</p> : null}
 
       <section className={tarjeta} aria-labelledby="h-odontograma">
-        <h2 id="h-odontograma" className="mb-3 text-[16px] font-medium text-linear-paper">Piezas dentales</h2>
+        <h2 id="h-odontograma" className="mb-3 text-[16px] font-medium text-ink">Piezas dentales</h2>
         <Odontograma porPieza={porPieza} seleccionada={pieza} base={base} />
       </section>
 
       {pieza ? (
         <section className={tarjeta} aria-labelledby="h-pieza">
           <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 id="h-pieza" className="text-[16px] font-medium text-linear-paper">
-              Pieza {pieza} <span className="text-[13px] font-normal text-linear-fog">{NOMBRE_CUADRANTE[Number(pieza[0])]}</span>
+            <h2 id="h-pieza" className="text-[16px] font-medium text-ink">
+              Pieza {pieza} <span className="text-[13px] font-normal text-steel">{NOMBRE_CUADRANTE[Number(pieza[0])]}</span>
             </h2>
-            <Link href={base} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4">Ver todo el historial</Link>
+            <Link href={base} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4">Ver todo el historial</Link>
           </div>
           {(porPieza.get(pieza) ?? []).length === 0 ? (
-            <p className="mt-2 text-[14px] text-linear-fog">Esta pieza no tiene tratamientos registrados.</p>
+            <p className="mt-2 text-[14px] text-steel">Esta pieza no tiene tratamientos registrados.</p>
           ) : (
-            <ul className="mt-2 divide-y divide-linear-graphite">
+            <ul className="mt-2 divide-y divide-hairline">
               {(porPieza.get(pieza) ?? []).map((e) => (
                 <li key={`${e.trabajoId}-${e.tratamiento}`}>
-                  <Link href={`/pacientes/${id}/trabajos/${e.trabajoId}`} className="objetivo-tactil flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 hover:bg-linear-obsidian">
-                    <span className="text-[15px] text-linear-bone">{e.tratamiento}{e.caras.length ? ` (${e.caras.join(", ")})` : ""}</span>
-                    <span className="font-linear-mono text-[13px] text-linear-fog">{dmy(e.fecha)}</span>
+                  <Link href={`/pacientes/${id}/trabajos/${e.trabajoId}`} className="objetivo-tactil flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-3 hover:bg-surface">
+                    <span className="text-[15px] text-ink">{e.tratamiento}{e.caras.length ? ` (${e.caras.join(", ")})` : ""}</span>
+                    <span className="font-family-2 text-[13px] text-steel">{dmy(e.fecha)}</span>
                   </Link>
                 </li>
               ))}
@@ -82,30 +82,30 @@ export default async function PaginaHistorial({ params, searchParams }: Props) {
       ) : null}
 
       <section aria-labelledby="h-trabajos" className="space-y-3">
-        <h2 id="h-trabajos" className="text-[16px] font-medium text-linear-paper">
-          {pieza ? `Trabajos que incluyen la pieza ${pieza}` : "Trabajos"} <span className="text-[13px] font-normal text-linear-fog">({mostrados.length})</span>
+        <h2 id="h-trabajos" className="text-[16px] font-medium text-ink">
+          {pieza ? `Trabajos que incluyen la pieza ${pieza}` : "Trabajos"} <span className="text-[13px] font-normal text-steel">({mostrados.length})</span>
         </h2>
         {mostrados.length === 0 ? (
           <div className={tarjeta}>
-            <p className="text-[15px] text-linear-bone">{pieza ? "Ningún trabajo incluye esta pieza." : "Todavía no hay trabajos registrados."}</p>
-            {editar && !pieza ? <p className="mt-1 text-[14px] text-linear-fog">Registrá el primero después de la próxima atención.</p> : null}
+            <p className="text-[15px] text-ink">{pieza ? "Ningún trabajo incluye esta pieza." : "Todavía no hay trabajos registrados."}</p>
+            {editar && !pieza ? <p className="mt-1 text-[14px] text-steel">Registrá el primero después de la próxima atención.</p> : null}
           </div>
         ) : (
           <ul className="space-y-3">
             {mostrados.map((t) => (
               <li key={t.id}>
-                <Link href={`/pacientes/${id}/trabajos/${t.id}`} className={`${tarjeta} block hover:border-linear-ash`}>
+                <Link href={`/pacientes/${id}/trabajos/${t.id}`} className={`${tarjeta} block hover:border-stone`}>
                   <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                    <span className="font-linear-mono text-[14px] text-linear-paper">{dmy(t.fecha)}</span>
-                    <span className="text-[13px] text-linear-fog">
+                    <span className="font-family-2 text-[14px] text-ink">{dmy(t.fecha)}</span>
+                    <span className="text-[13px] text-steel">
                       {visibles.length > 1 ? `${t.profesional} · ` : ""}
                       {t.versionActual > 1 ? `Corregido (versión ${t.versionActual})` : "Versión original"}
                     </span>
                   </div>
-                  <p className="mt-2 line-clamp-3 whitespace-pre-line text-[15px] text-linear-bone">{t.descripcion}</p>
+                  <p className="mt-2 line-clamp-3 whitespace-pre-line text-[15px] text-ink">{t.descripcion}</p>
                   <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
                     <ListaPiezas piezas={t.piezas} />
-                    <span className="text-[13px] text-linear-fog">{t.monto ? `Informado: ${formatoMonto(t.monto)}` : ""}</span>
+                    <span className="text-[13px] text-steel">{t.monto ? `Informado: ${formatoMonto(t.monto)}` : ""}</span>
                   </div>
                 </Link>
               </li>

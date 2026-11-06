@@ -13,7 +13,7 @@ export function EliminarTrabajo({ trabajoId }: { trabajoId: string }) {
   return (
     <form action={accion} noValidate className="space-y-3">
       <input type="hidden" name="trabajoId" value={trabajoId} />
-      <p className="text-[14px] text-linear-mist">El trabajo deja de verse en el historial y en el odontograma. No se borra: queda en el registro de cambios con tu nombre y el motivo.</p>
+      <p className="text-[14px] text-slate">El trabajo deja de verse en el historial y en el odontograma. No se borra: queda en el registro de cambios con tu nombre y el motivo.</p>
       <Campo id="motivo" etiqueta="Motivo" error={error}>
         <input id="motivo" name="motivo" maxLength={300} defaultValue={s.valores?.motivo} className={claseCampo} {...descrito("motivo", error)} />
       </Campo>

@@ -1,36 +1,43 @@
-# Ajustes de accesibilidad sobre la paleta Linear
+# Accesibilidad del sistema Mintlify (tema claro)
 
-Contraste calculado con la fórmula de WCAG 2.1 el 2026-11-04. Objetivo del producto: RNF-22 (texto 4,5:1), RNF-23 (áreas táctiles de 44 × 44 px), RNF-24 (el color no es el único indicador).
+Contraste calculado con la fórmula de WCAG 2.1 el 2026-11-06. Objetivo del producto: RNF-22 (texto 4,5:1), RNF-23 (áreas táctiles de 44 × 44 px), RNF-24 (el color no es el único indicador).
 
-## Texto sobre Carbon `#0f1011` (tarjetas) y Void `#08090a` (fondo)
+## Texto sobre Canvas `#ffffff` y Surface `#f7f7f7`
 
-| Color | Sobre Carbon | Sobre Void | Uso permitido para texto |
+| Color | Sobre Canvas | Sobre Surface | Uso permitido para texto |
 | --- | --- | --- | --- |
-| paper | 19,05 | 19,93 | Sí |
-| bone | 15,13 | 15,83 | Sí |
-| mist | 13,04 | 13,64 | Sí |
-| fog | 5,86 | 6,13 | Sí: texto secundario |
-| acid-lime | 15,44 | 16,15 | Sí |
-| teal | 7,92 | 8,29 | Sí |
-| green | 6,01 | 6,29 | Sí |
-| coral-red | 5,47 | 5,73 | Sí |
-| lavender | 4,50 | 4,71 | Justo en el límite: solo texto de 16 px o más |
-| iris-violet | 4,26 | 4,46 | **No** como texto; solo decorativo o con fondo propio |
-| ash | 3,30 | 3,45 | **No** como texto; solo decorativo o texto deshabilitado |
+| ink `#0a0a0a` | 19,80 | 18,48 | Sí |
+| charcoal `#1c1c1e` | 17,01 | 15,88 | Sí |
+| slate `#3a3a3c` | 11,35 | 10,59 | Sí |
+| steel `#5a5a5c` | 6,88 | 6,42 | Sí: texto secundario |
+| success-text `#0b7a58` | 5,33 | 4,98 | Sí (derivado) |
+| danger-text `#b83a3a` | 5,67 | 5,29 | Sí (derivado) |
+| warn-text `#8a5600` | 6,16 | 5,75 | Sí (derivado) |
+| tag-text `#2a5db0` | 6,38 | 5,96 | Sí (derivado) |
+| brand-tag `#3772cf` | 4,70 | 4,38 | Solo bordes y fondos; como texto, usar tag-text |
+| stone `#888888` | 3,54 | 3,31 | **No** como texto; sí para bordes de controles (3:1) |
+| brand-annotate `#1ba673` | 3,11 | 2,90 | **No** como texto |
+| brand-error `#d45656` | 3,99 | 3,72 | **No** como texto |
+| brand-warn `#c37d0d` | 3,35 | 3,13 | **No** como texto |
+| brand-green `#00d4a4` | 1,92 | 1,79 | **No** como texto ni como único borde de foco |
+| muted `#a8a8aa` | 2,37 | 2,22 | **No**; solo elementos deshabilitados |
 
-Texto Void sobre Acid Lime: 16,15. Papel sobre iris-violet como fondo: 4,47 (no alcanza para texto pequeño).
+Texto `ink` sobre brand-green: 10,33. Sobre brand-green-deep: 7,44. Por eso todo botón o etiqueta con fondo verde lleva texto negro, nunca blanco. Blanco sobre `primary`: 19,80.
 
-## Bordes de controles (WCAG 1.4.11 pide 3:1)
+Los `brand-*` de error, advertencia y éxito del original no alcanzan 4,5:1 como texto sobre blanco. Se agregaron los derivados `danger-text`, `warn-text`, `success-text` y `tag-text`, que sí lo cumplen.
 
-Graphite (1,24) y Smoke (1,69) sobre Carbon **no alcanzan** para el borde de un campo o un botón secundario. Regla:
+## Bordes y foco (WCAG 1.4.11 pide 3:1)
 
-- Separadores y bordes de tarjetas: Graphite, como indica DESIGN.md (son decorativos).
-- Borde de `input`, `select`, `textarea` y botón Ghost: Ash (3,30) o Fog (5,86). El foco sube a Mist, más un contorno de 2 px.
+- Hairline (1,26) y hairline-soft son decorativos: bordes de tarjetas y separadores de filas.
+- Borde de `input`, `select`, `textarea` y botón secundario: `stone` (3,54).
+- Foco: contorno de 2 px en `ink` (19,80) con 2 px de separación, en todos los controles. Los campos además cambian el borde a `brand-green`; el verde solo acompaña, no es el indicador de foco.
 
 ## Otras reglas
 
-- Áreas táctiles: el botón primario de DESIGN.md (10 × 16 px de relleno) queda de unos 36–40 px de alto. En pantallas táctiles se fuerza `min-height: 44px` y `min-width: 44px`.
-- Estados de turno: cada estado lleva etiqueta de texto y un ícono además del color (Programado, Atendido, Ausente, Cancelado).
-- Acid Lime una vez por vista: en la agenda es "Nuevo turno"; en la ficha del paciente, "Registrar trabajo".
-- Tema: solo oscuro. Confirmar con la doctora si lo quiere así para uso diurno en consultorio; si no, se agrega un tema claro con los mismos tokens.
-- Tipografía: Inter Variable sale de Google Fonts o se autoaloja (`next/font`). Berkeley Mono es de pago: se reemplaza por JetBrains Mono, que ya figura como alternativa en la variable `--linear-mono`.
+- Áreas táctiles: botones y enlaces de navegación con `min-height` y `min-width` de 44 px en pantallas táctiles (`.objetivo-tactil`).
+- Estados: turnos con texto e ícono (Programado, Atendido, Ausente, Cancelado); errores con ícono y mensaje; sección activa con `aria-current`, peso 500 y fondo, además de la línea verde.
+- Estados de interfaz: enviando (botón deshabilitado con texto "Ingresando…"), error (mensaje con `role="alert"`), éxito (`role="status"`), vacío (mensaje explicativo), deshabilitado, foco y hover/presionado.
+- Acento verde: como máximo un acento por vista, nunca como único portador de información.
+- Tema: solo claro. Se agregó `color-scheme: light`.
+- Tipografía: Inter variable y Geist Mono variable, autoalojadas con `@fontsource-variable`.
+- Movimiento: `prefers-reduced-motion` anula animaciones y transiciones.

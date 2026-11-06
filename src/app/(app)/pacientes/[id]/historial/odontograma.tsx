@@ -17,11 +17,11 @@ function Cuadrante({ cuadrante, desde, hasta, porPieza, seleccionada, base }: Pr
                 href={activa ? base : `${base}?pieza=${p}`}
                 aria-current={activa ? "true" : undefined}
                 aria-label={`Pieza ${p}${n ? `, ${n} tratamiento${n === 1 ? "" : "s"}` : ", sin tratamientos"}${activa ? ", seleccionada" : ""}`}
-                className={`flex min-h-[44px] w-full flex-col items-center justify-center rounded-[6px] border px-1 text-[13px] ${
-                  activa ? "border-linear-paper bg-linear-graphite text-linear-paper" : n ? "border-linear-fog bg-linear-obsidian text-linear-paper" : "border-linear-graphite text-linear-fog"
-                } hover:border-linear-mist`}
+                className={`flex min-h-[44px] w-full flex-col items-center justify-center rounded-md border px-1 text-[13px] ${
+                  activa ? "border-ink bg-hairline text-ink" : n ? "border-steel bg-surface text-ink" : "border-hairline text-steel"
+                } hover:border-slate`}
               >
-                <span className="font-linear-mono">{p}</span>
+                <span className="font-family-2">{p}</span>
                 <span aria-hidden="true" className="h-2 text-[10px] leading-none">{n ? "●".repeat(Math.min(n, 3)) : ""}</span>
               </Link>
             </li>
@@ -47,12 +47,12 @@ export function Odontograma(props: Props) {
   const conTemporarias = [...props.porPieza.keys()].some((p) => Number(p[0]) >= 5);
   return (
     <div className="space-y-3">
-      <p className="text-[13px] text-linear-fog">Vista de frente: la derecha del paciente queda a la izquierda. ● marca piezas con tratamientos registrados.</p>
+      <p className="text-[13px] text-steel">Vista de frente: la derecha del paciente queda a la izquierda. ● marca piezas con tratamientos registrados.</p>
       <Arcada cuadrantes={filaDeCuadrantes.permanentesSuperior} {...props} />
-      <div className="border-t border-linear-graphite" aria-hidden="true" />
+      <div className="border-t border-hairline" aria-hidden="true" />
       <Arcada cuadrantes={filaDeCuadrantes.permanentesInferior} {...props} />
       <details open={conTemporarias} className="pt-1">
-        <summary className="objetivo-tactil flex cursor-pointer items-center text-[14px] text-linear-mist">Dentición temporaria</summary>
+        <summary className="objetivo-tactil flex cursor-pointer items-center text-[14px] text-slate">Dentición temporaria</summary>
         <div className="mt-3 space-y-3">
           <Arcada cuadrantes={filaDeCuadrantes.temporariasSuperior} {...props} />
           <Arcada cuadrantes={filaDeCuadrantes.temporariasInferior} {...props} />

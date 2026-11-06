@@ -25,12 +25,12 @@ export default async function PaginaNuevoTrabajo({ params, searchParams }: Props
   const turno = turnoId ? await obtenerTurno(db, turnoId) : null;
   const turnoValido = turno && turno.pacienteId === id ? turno : null;
   const { actual } = await profesionalActual(usuario, "clinico.editar", turnoValido?.profesionalId ?? param(q.prof));
-  if (!actual) return <p className="text-[15px] text-linear-fog">Tu usuario no tiene ningún profesional asignado para registrar trabajos.</p>;
+  if (!actual) return <p className="text-[15px] text-steel">Tu usuario no tiene ningún profesional asignado para registrar trabajos.</p>;
   const fechaTurno = turnoValido ? fechaDe(turnoValido.inicio) : hoy();
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <p><Link href={`/pacientes/${id}/historial`} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">← Volver al historial</Link></p>
+      <p><Link href={`/pacientes/${id}/historial`} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">← Volver al historial</Link></p>
       <EncabezadoPagina titulo="Registrar trabajo" subtitulo={`${paciente.apellido}, ${paciente.nombre} · ${actual.nombre}`} />
       <div className={tarjeta}>
         <FormularioTrabajo
