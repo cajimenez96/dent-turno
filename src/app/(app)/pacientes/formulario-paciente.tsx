@@ -62,7 +62,7 @@ export function FormularioPaciente({ id, inicial, volverATurno }: { id?: string;
       <AvisoError error={estado.error} />
       {existente ? (
         <p className="text-[14px]">
-          <Link href={`/pacientes/${existente.id}`} className="text-linear-mist underline underline-offset-4 hover:text-linear-paper">
+          <Link href={`/pacientes/${existente.id}`} className="text-slate underline underline-offset-4 hover:text-ink">
             Abrir a {existente.apellido}, {existente.nombre}
           </Link>
         </p>
@@ -74,7 +74,7 @@ export function FormularioPaciente({ id, inicial, volverATurno }: { id?: string;
           <ul className="mt-2 space-y-1">
             {duplicados.map((d) => (
               <li key={d.id}>
-                <Link href={`/pacientes/${d.id}`} className="objetivo-tactil inline-flex items-center text-linear-paper underline underline-offset-4">
+                <Link href={`/pacientes/${d.id}`} className="objetivo-tactil inline-flex items-center text-ink underline underline-offset-4">
                   {etiquetaDup(d)}
                 </Link>
               </li>

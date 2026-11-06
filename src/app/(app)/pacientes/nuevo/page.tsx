@@ -18,7 +18,7 @@ export default async function PaginaNuevoPaciente({ searchParams }: Props) {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <p><Link href={atras} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">← {volver ? "Volver al turno" : "Volver a pacientes"}</Link></p>
+      <p><Link href={atras} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">← {volver ? "Volver al turno" : "Volver a pacientes"}</Link></p>
       <EncabezadoPagina titulo="Nuevo paciente" />
       <div className={tarjeta}>
         <FormularioPaciente inicial={{ apellido: apellido && !/^\d+$/.test(apellido) ? apellido : "", nombre: resto.join(" ") }} volverATurno={volver || undefined} />

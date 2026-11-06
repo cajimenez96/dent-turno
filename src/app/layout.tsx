@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/inter";
-import "@fontsource-variable/jetbrains-mono";
+import "@fontsource-variable/geist-mono";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,12 +9,12 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-export const viewport: Viewport = { themeColor: "#08090a", colorScheme: "dark" };
+export const viewport: Viewport = { themeColor: "#ffffff", colorScheme: "light" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es-AR">
-      <body className="font-linear min-h-dvh bg-linear-void text-linear-bone">{children}</body>
+      <body className="font-primary min-h-dvh bg-canvas text-ink">{children}</body>
     </html>
   );
 }

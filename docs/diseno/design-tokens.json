@@ -1,326 +1,352 @@
 {
-  "$schema": "https://design-tokens.github.io/community-group/format/",
-  "meta": {
-    "name": "Linear",
-    "theme": "dark",
-    "description": "Midnight precision instrument."
-  },
+  "$schema": "https://tr.designtokens.org/format/",
+  "$description": "Design tokens de STO basados en Mintlify (tema claro)",
   "color": {
-    "void": {
-      "$type": "color",
-      "$value": "#08090a",
-      "$description": "Linear void."
+    "primary": {
+      "$value": "#0a0a0a",
+      "$type": "color"
     },
-    "carbon": {
-      "$type": "color",
-      "$value": "#0f1011",
-      "$description": "Linear carbon."
-    },
-    "obsidian": {
-      "$type": "color",
-      "$value": "#161718",
-      "$description": "Linear obsidian."
-    },
-    "graphite": {
-      "$type": "color",
-      "$value": "#23252a",
-      "$description": "Linear graphite."
-    },
-    "smoke": {
-      "$type": "color",
-      "$value": "#383b3f",
-      "$description": "Linear smoke."
-    },
-    "ash": {
-      "$type": "color",
-      "$value": "#62666d",
-      "$description": "Linear ash."
-    },
-    "fog": {
-      "$type": "color",
-      "$value": "#8a8f98",
-      "$description": "Linear fog."
-    },
-    "mist": {
-      "$type": "color",
-      "$value": "#d0d6e0",
-      "$description": "Linear mist."
-    },
-    "bone": {
-      "$type": "color",
-      "$value": "#e5e5e6",
-      "$description": "Linear bone."
-    },
-    "paper": {
-      "$type": "color",
+    "on-primary": {
       "$value": "#ffffff",
-      "$description": "Linear paper."
+      "$type": "color"
     },
-    "acid-lime": {
-      "$type": "color",
-      "$value": "#e4f222",
-      "$description": "Linear acid-lime."
+    "brand-green": {
+      "$value": "#00d4a4",
+      "$type": "color"
     },
-    "pulse-green": {
-      "$type": "color",
-      "$value": "#27a644",
-      "$description": "Linear pulse-green."
+    "brand-green-deep": {
+      "$value": "#00b48a",
+      "$type": "color"
     },
-    "coral-red": {
-      "$type": "color",
-      "$value": "#eb5757",
-      "$description": "Linear coral-red."
+    "brand-green-soft": {
+      "$value": "#7cebcb",
+      "$type": "color"
     },
-    "signal-teal": {
-      "$type": "color",
-      "$value": "#02b8cc",
-      "$description": "Linear signal-teal."
+    "brand-tag": {
+      "$value": "#3772cf",
+      "$type": "color"
     },
-    "iris-violet": {
-      "$type": "color",
-      "$value": "#6366f1",
-      "$description": "Linear iris-violet."
+    "brand-warn": {
+      "$value": "#c37d0d",
+      "$type": "color"
     },
-    "lavender": {
+    "brand-annotate": {
+      "$value": "#1ba673",
+      "$type": "color"
+    },
+    "brand-error": {
+      "$value": "#d45656",
+      "$type": "color"
+    },
+    "brand-cursor": {
+      "$value": "#888888",
+      "$type": "color"
+    },
+    "canvas": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "canvas-dark": {
+      "$value": "#0a0a0a",
+      "$type": "color"
+    },
+    "surface": {
+      "$value": "#f7f7f7",
+      "$type": "color"
+    },
+    "surface-soft": {
+      "$value": "#fafafa",
+      "$type": "color"
+    },
+    "surface-code": {
+      "$value": "#1c1c1e",
+      "$type": "color"
+    },
+    "hairline": {
+      "$value": "#e5e5e5",
+      "$type": "color"
+    },
+    "hairline-soft": {
+      "$value": "#ededed",
+      "$type": "color"
+    },
+    "hairline-dark": {
+      "$value": "#1f1f1f",
+      "$type": "color"
+    },
+    "ink": {
+      "$value": "#0a0a0a",
+      "$type": "color"
+    },
+    "charcoal": {
+      "$value": "#1c1c1e",
+      "$type": "color"
+    },
+    "slate": {
+      "$value": "#3a3a3c",
+      "$type": "color"
+    },
+    "steel": {
+      "$value": "#5a5a5c",
+      "$type": "color"
+    },
+    "stone": {
+      "$value": "#888888",
+      "$type": "color"
+    },
+    "muted": {
+      "$value": "#a8a8aa",
+      "$type": "color"
+    },
+    "on-dark": {
+      "$value": "#ffffff",
+      "$type": "color"
+    },
+    "on-dark-muted": {
+      "$value": "#b3b3b3",
+      "$type": "color"
+    },
+    "danger-text": {
+      "$value": "#b83a3a",
       "$type": "color",
-      "$value": "#8b5cf6",
-      "$description": "Linear lavender."
+      "$description": "Derivado para texto AA; no existe en Mintlify"
+    },
+    "success-text": {
+      "$value": "#0b7a58",
+      "$type": "color",
+      "$description": "Derivado para texto AA; no existe en Mintlify"
+    },
+    "warn-text": {
+      "$value": "#8a5600",
+      "$type": "color",
+      "$description": "Derivado para texto AA; no existe en Mintlify"
+    },
+    "tag-text": {
+      "$value": "#2a5db0",
+      "$type": "color",
+      "$description": "Derivado para texto AA; no existe en Mintlify"
     }
   },
   "typography": {
-    "caption": {
-      "$type": "typography",
+    "display-lg": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "13px",
-        "lineHeight": 1.2,
-        "letterSpacing": "0",
-        "fontWeight": 400
+        "fontFamily": "Inter",
+        "fontSize": "56px",
+        "lineHeight": 1.1,
+        "letterSpacing": "-1.5px"
       },
-      "$description": "Linear caption."
+      "$type": "typography"
+    },
+    "heading-1": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "48px",
+        "lineHeight": 1.1,
+        "letterSpacing": "-1px"
+      },
+      "$type": "typography"
+    },
+    "heading-2": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "36px",
+        "lineHeight": 1.2,
+        "letterSpacing": "-0.5px"
+      },
+      "$type": "typography"
+    },
+    "heading-3": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "28px",
+        "lineHeight": 1.25,
+        "letterSpacing": "0"
+      },
+      "$type": "typography"
+    },
+    "heading-4": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "22px",
+        "lineHeight": 1.3,
+        "letterSpacing": "0"
+      },
+      "$type": "typography"
+    },
+    "heading-5": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "18px",
+        "lineHeight": 1.4,
+        "letterSpacing": "0"
+      },
+      "$type": "typography"
+    },
+    "subtitle": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "18px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0"
+      },
+      "$type": "typography"
+    },
+    "body-md": {
+      "$value": {
+        "fontFamily": "Inter",
+        "fontSize": "16px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0"
+      },
+      "$type": "typography"
     },
     "body-sm": {
-      "$type": "typography",
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "15px",
-        "lineHeight": 1.6,
-        "letterSpacing": "-0.165px",
-        "fontWeight": 400
+        "fontFamily": "Inter",
+        "fontSize": "14px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0"
       },
-      "$description": "Linear body-sm."
+      "$type": "typography"
     },
-    "body-lg": {
-      "$type": "typography",
+    "caption": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "20px",
-        "lineHeight": 1.33,
-        "letterSpacing": "-0.24px",
-        "fontWeight": 590
+        "fontFamily": "Inter",
+        "fontSize": "13px",
+        "lineHeight": 1.4,
+        "letterSpacing": "0"
       },
-      "$description": "Linear body-lg."
+      "$type": "typography"
     },
-    "subheading": {
-      "$type": "typography",
+    "micro": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "24px",
-        "lineHeight": 1.33,
-        "letterSpacing": "-0.288px",
-        "fontWeight": 400
+        "fontFamily": "Inter",
+        "fontSize": "12px",
+        "lineHeight": 1.4,
+        "letterSpacing": "0"
       },
-      "$description": "Linear subheading."
+      "$type": "typography"
     },
-    "heading-sm": {
-      "$type": "typography",
+    "micro-uppercase": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "32px",
-        "lineHeight": 1.13,
-        "letterSpacing": "-0.704px",
-        "fontWeight": 510
+        "fontFamily": "Inter",
+        "fontSize": "11px",
+        "lineHeight": 1.4,
+        "letterSpacing": "0.5px"
       },
-      "$description": "Linear heading-sm."
+      "$type": "typography"
     },
-    "heading": {
-      "$type": "typography",
+    "button-md": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "48px",
-        "lineHeight": 1,
-        "letterSpacing": "-1.056px",
-        "fontWeight": 510
+        "fontFamily": "Inter",
+        "fontSize": "14px",
+        "lineHeight": 1.3,
+        "letterSpacing": "0"
       },
-      "$description": "Linear heading."
+      "$type": "typography"
     },
-    "heading-lg": {
-      "$type": "typography",
+    "code-md": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "64px",
-        "lineHeight": 1,
-        "letterSpacing": "-1.408px",
-        "fontWeight": 510
+        "fontFamily": "Geist Mono",
+        "fontSize": "14px",
+        "lineHeight": 1.5,
+        "letterSpacing": "0"
       },
-      "$description": "Linear heading-lg."
+      "$type": "typography"
     },
-    "display": {
-      "$type": "typography",
+    "code-sm": {
       "$value": {
-        "fontFamily": "Inter Variable, Inter, sans-serif",
-        "fontSize": "72px",
-        "lineHeight": 1,
-        "letterSpacing": "-1.584px",
-        "fontWeight": 510
+        "fontFamily": "Geist Mono",
+        "fontSize": "13px",
+        "lineHeight": 1.4,
+        "letterSpacing": "0"
       },
-      "$description": "Linear display."
+      "$type": "typography"
+    },
+    "code-inline": {
+      "$value": {
+        "fontFamily": "Geist Mono",
+        "fontSize": "13px",
+        "lineHeight": 1.3,
+        "letterSpacing": "0"
+      },
+      "$type": "typography"
     }
   },
   "spacing": {
-    "4": {
-      "$type": "dimension",
+    "xxs": {
       "$value": "4px",
-      "$description": "4px."
+      "$type": "dimension"
     },
-    "8": {
-      "$type": "dimension",
+    "xs": {
       "$value": "8px",
-      "$description": "8px."
+      "$type": "dimension"
     },
-    "12": {
-      "$type": "dimension",
+    "sm": {
       "$value": "12px",
-      "$description": "12px."
+      "$type": "dimension"
     },
-    "16": {
-      "$type": "dimension",
+    "md": {
       "$value": "16px",
-      "$description": "16px."
+      "$type": "dimension"
     },
-    "20": {
-      "$type": "dimension",
+    "lg": {
       "$value": "20px",
-      "$description": "20px."
+      "$type": "dimension"
     },
-    "24": {
-      "$type": "dimension",
+    "xl": {
       "$value": "24px",
-      "$description": "24px."
+      "$type": "dimension"
     },
-    "28": {
-      "$type": "dimension",
-      "$value": "28px",
-      "$description": "28px."
-    },
-    "32": {
-      "$type": "dimension",
+    "xxl": {
       "$value": "32px",
-      "$description": "32px."
+      "$type": "dimension"
     },
-    "36": {
-      "$type": "dimension",
-      "$value": "36px",
-      "$description": "36px."
-    },
-    "40": {
-      "$type": "dimension",
+    "xxxl": {
       "$value": "40px",
-      "$description": "40px."
+      "$type": "dimension"
     },
-    "48": {
-      "$type": "dimension",
+    "section-sm": {
       "$value": "48px",
-      "$description": "48px."
+      "$type": "dimension"
     },
-    "56": {
-      "$type": "dimension",
-      "$value": "56px",
-      "$description": "56px."
-    },
-    "64": {
-      "$type": "dimension",
+    "section": {
       "$value": "64px",
-      "$description": "64px."
+      "$type": "dimension"
     },
-    "80": {
-      "$type": "dimension",
-      "$value": "80px",
-      "$description": "80px."
-    },
-    "96": {
-      "$type": "dimension",
+    "section-lg": {
       "$value": "96px",
-      "$description": "96px."
-    },
-    "128": {
-      "$type": "dimension",
-      "$value": "128px",
-      "$description": "128px."
+      "$type": "dimension"
     }
   },
   "radius": {
-    "small": {
-      "$type": "dimension",
-      "$value": "2px",
-      "$description": "Linear small."
-    },
-    "badges": {
-      "$type": "dimension",
+    "xs": {
       "$value": "4px",
-      "$description": "Linear badges."
+      "$type": "dimension"
     },
-    "inputs": {
-      "$type": "dimension",
-      "$value": "6px",
-      "$description": "Linear inputs."
-    },
-    "buttons": {
-      "$type": "dimension",
-      "$value": "6px",
-      "$description": "Linear buttons."
-    },
-    "cards": {
-      "$type": "dimension",
-      "$value": "12px",
-      "$description": "Linear cards."
-    },
-    "pills": {
-      "$type": "dimension",
-      "$value": "9999px",
-      "$description": "Linear pills."
-    }
-  },
-  "shadow": {
     "sm": {
-      "$type": "shadow",
-      "$value": "rgba(0, 0, 0, 0.4) 0 2px 4px",
-      "$description": "Linear sm."
+      "$value": "6px",
+      "$type": "dimension"
     },
     "md": {
-      "$type": "shadow",
-      "$value": "rgba(0, 0, 0, 0.2) 0 0 12px inset",
-      "$description": "Linear md."
+      "$value": "8px",
+      "$type": "dimension"
     },
-    "subtle": {
-      "$type": "shadow",
-      "$value": "rgb(35, 37, 42) 0 0 0 1px inset",
-      "$description": "Linear subtle."
-    },
-    "subtle-2": {
-      "$type": "shadow",
-      "$value": "rgba(0, 0, 0, 0.2) 0 0 0 1px",
-      "$description": "Linear subtle-2."
+    "lg": {
+      "$value": "12px",
+      "$type": "dimension"
     },
     "xl": {
-      "$type": "shadow",
-      "$value": "rgba(8, 9, 10, 0.6) 0 4px 32px",
-      "$description": "Linear xl."
+      "$value": "16px",
+      "$type": "dimension"
     },
-    "subtle-5": {
-      "$type": "shadow",
-      "$value": "rgba(0, 0, 0, 0.1) 0 0 0 2px",
-      "$description": "Linear subtle-5."
+    "xxl": {
+      "$value": "24px",
+      "$type": "dimension"
+    },
+    "full": {
+      "$value": "9999px",
+      "$type": "dimension"
     }
   }
 }

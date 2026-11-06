@@ -34,16 +34,16 @@ export default async function PaginaPaciente({ params, searchParams }: Props) {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <p><Link href="/pacientes" className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">← Volver a pacientes</Link></p>
+      <p><Link href="/pacientes" className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">← Volver a pacientes</Link></p>
       <EncabezadoPagina
         titulo={`${p.apellido}, ${p.nombre}`}
         subtitulo={p.activo ? undefined : "Paciente desactivado"}
         accion={agendar && p.activo ? <Link href={`/agenda/nuevo?paciente=${p.id}`} className={botonPrimario}>Dar turno</Link> : null}
       />
-      {param(q.guardado) ? <p role="status" className="text-[14px] text-linear-pulse-green">Cambios guardados.</p> : null}
+      {param(q.guardado) ? <p role="status" className="text-[14px] text-success-text">Cambios guardados.</p> : null}
 
       <section className={tarjeta} aria-labelledby="h-datos">
-        <h2 id="h-datos" className="mb-4 text-[16px] font-medium text-linear-paper">Datos</h2>
+        <h2 id="h-datos" className="mb-4 text-[16px] font-medium text-ink">Datos</h2>
         {editar ? (
           <FormularioPaciente
             id={p.id}
@@ -51,32 +51,32 @@ export default async function PaginaPaciente({ params, searchParams }: Props) {
           />
         ) : (
           <dl className="grid gap-3 sm:grid-cols-2 text-[15px]">
-            <div><dt className="text-[13px] text-linear-fog">Documento</dt><dd>{p.numeroDocumento ? `${p.tipoDocumento} ${p.numeroDocumento}` : "—"}</dd></div>
-            <div><dt className="text-[13px] text-linear-fog">Teléfono</dt><dd>{p.telefono ?? "—"}</dd></div>
-            <div><dt className="text-[13px] text-linear-fog">Nacimiento</dt><dd>{p.nacimiento ? p.nacimiento.split("-").reverse().join("/") : "—"}</dd></div>
-            <div><dt className="text-[13px] text-linear-fog">Email</dt><dd>{p.email ?? "—"}</dd></div>
+            <div><dt className="text-[13px] text-steel">Documento</dt><dd>{p.numeroDocumento ? `${p.tipoDocumento} ${p.numeroDocumento}` : "—"}</dd></div>
+            <div><dt className="text-[13px] text-steel">Teléfono</dt><dd>{p.telefono ?? "—"}</dd></div>
+            <div><dt className="text-[13px] text-steel">Nacimiento</dt><dd>{p.nacimiento ? p.nacimiento.split("-").reverse().join("/") : "—"}</dd></div>
+            <div><dt className="text-[13px] text-steel">Email</dt><dd>{p.email ?? "—"}</dd></div>
           </dl>
         )}
       </section>
 
       {puede(concesiones, "clinico.ver") ? (
         <section className={tarjeta} aria-labelledby="h-historial">
-          <h2 id="h-historial" className="text-[16px] font-medium text-linear-paper">Historial clínico</h2>
-          <p className="mt-1 text-[14px] text-linear-fog">Trabajos realizados, piezas dentales y registro de cambios.</p>
+          <h2 id="h-historial" className="text-[16px] font-medium text-ink">Historial clínico</h2>
+          <p className="mt-1 text-[14px] text-steel">Trabajos realizados, piezas dentales y registro de cambios.</p>
           <p className="mt-3"><Link href={`/pacientes/${p.id}/historial`} className={botonSecundario}>Ver historial clínico</Link></p>
         </section>
       ) : null}
 
       <section className={tarjeta} aria-labelledby="h-turnos">
-        <h2 id="h-turnos" className="text-[16px] font-medium text-linear-paper">Turnos</h2>
+        <h2 id="h-turnos" className="text-[16px] font-medium text-ink">Turnos</h2>
         {turnos.length === 0 ? (
-          <p className="mt-2 text-[14px] text-linear-fog">Todavía no tiene turnos.</p>
+          <p className="mt-2 text-[14px] text-steel">Todavía no tiene turnos.</p>
         ) : (
-          <ul className="mt-2 divide-y divide-linear-graphite">
+          <ul className="mt-2 divide-y divide-hairline">
             {turnos.map((t) => (
               <li key={t.id}>
-                <Link href={`/agenda/turnos/${t.id}`} className="objetivo-tactil flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 hover:bg-linear-obsidian">
-                  <span className="text-[15px] text-linear-bone">{etiquetaDiaCap(fechaDe(t.inicio))} · <span className="font-linear-mono text-[14px]">{horaDe(t.inicio)}</span></span>
+                <Link href={`/agenda/turnos/${t.id}`} className="objetivo-tactil flex flex-wrap items-center justify-between gap-x-4 gap-y-1 py-3 hover:bg-surface">
+                  <span className="text-[15px] text-ink">{etiquetaDiaCap(fechaDe(t.inicio))} · <span className="font-family-2 text-[14px]">{horaDe(t.inicio)}</span></span>
                   <EtiquetaEstado estado={t.estado} liberado={t.liberado} />
                 </Link>
               </li>
@@ -87,7 +87,7 @@ export default async function PaginaPaciente({ params, searchParams }: Props) {
 
       {editar && p.activo ? (
         <section className={tarjeta} aria-labelledby="h-desactivar">
-          <h2 id="h-desactivar" className="mb-3 text-[16px] font-medium text-linear-paper">Desactivar</h2>
+          <h2 id="h-desactivar" className="mb-3 text-[16px] font-medium text-ink">Desactivar</h2>
           <DesactivarPaciente id={p.id} />
         </section>
       ) : null}

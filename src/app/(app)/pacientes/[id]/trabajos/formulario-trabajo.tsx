@@ -59,14 +59,14 @@ export function FormularioTrabajo(props: Props) {
       </Campo>
 
       <fieldset className="space-y-3">
-        <legend className="text-[13px] font-medium text-linear-mist">Piezas tratadas (opcional)</legend>
-        {filas.length === 0 ? <p className="text-[14px] text-linear-fog">Si el trabajo no es sobre una pieza en particular, dejalo así.</p> : null}
+        <legend className="text-[13px] font-medium text-slate">Piezas tratadas (opcional)</legend>
+        {filas.length === 0 ? <p className="text-[14px] text-steel">Si el trabajo no es sobre una pieza en particular, dejalo así.</p> : null}
         <ul className="space-y-3">
           {filas.map((f, i) => (
-            <li key={f.clave} className="rounded-[12px] border border-linear-graphite bg-linear-obsidian p-3">
+            <li key={f.clave} className="rounded-lg border border-hairline bg-surface p-3">
               <div className="grid gap-3 sm:grid-cols-[150px_1fr]">
                 <div>
-                  <label htmlFor={`${id}-p${f.clave}`} className="block text-[13px] text-linear-mist">Pieza {i + 1}</label>
+                  <label htmlFor={`${id}-p${f.clave}`} className="block text-[13px] text-slate">Pieza {i + 1}</label>
                   <select id={`${id}-p${f.clave}`} value={f.pieza} onChange={(e) => cambiar(f.clave, { pieza: e.target.value })} className={claseCampo}>
                     <option value="">Elegir…</option>
                     {GRUPOS.map((g) => (
@@ -77,28 +77,28 @@ export function FormularioTrabajo(props: Props) {
                   </select>
                 </div>
                 <div>
-                  <label htmlFor={`${id}-t${f.clave}`} className="block text-[13px] text-linear-mist">Tratamiento</label>
+                  <label htmlFor={`${id}-t${f.clave}`} className="block text-[13px] text-slate">Tratamiento</label>
                   <input id={`${id}-t${f.clave}`} value={f.tratamiento} maxLength={80} onChange={(e) => cambiar(f.clave, { tratamiento: e.target.value })} placeholder="Restauración" className={claseCampo} />
                 </div>
               </div>
               <fieldset className="mt-3">
-                <legend className="text-[13px] text-linear-mist">Caras</legend>
+                <legend className="text-[13px] text-slate">Caras</legend>
                 <div className="mt-1 flex flex-wrap gap-x-4">
                   {CARAS.map((c) => (
-                    <label key={c} className="objetivo-tactil flex items-center gap-2 text-[14px] text-linear-bone">
-                      <input type="checkbox" checked={f.caras.includes(c)} onChange={() => alternarCara(f, c)} className="h-4 w-4 accent-[#e4f222]" />
-                      <span><span className="font-linear-mono">{c}</span> <span className="text-linear-fog">{NOMBRE_CARA[c]}</span></span>
+                    <label key={c} className="objetivo-tactil flex items-center gap-2 text-[14px] text-ink">
+                      <input type="checkbox" checked={f.caras.includes(c)} onChange={() => alternarCara(f, c)} className="h-4 w-4 accent-primary" />
+                      <span><span className="font-family-2">{c}</span> <span className="text-steel">{NOMBRE_CARA[c]}</span></span>
                     </label>
                   ))}
                 </div>
               </fieldset>
-              <button type="button" onClick={() => setFilas((fs) => fs.filter((x) => x.clave !== f.clave))} className="objetivo-tactil mt-2 text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper" aria-label={`Quitar la pieza ${i + 1}`}>
+              <button type="button" onClick={() => setFilas((fs) => fs.filter((x) => x.clave !== f.clave))} className="objetivo-tactil mt-2 text-[14px] text-slate underline underline-offset-4 hover:text-ink" aria-label={`Quitar la pieza ${i + 1}`}>
                 Quitar esta pieza
               </button>
             </li>
           ))}
         </ul>
-        {campos.piezas ? <p className="text-[13px] text-linear-coral-red">{campos.piezas}</p> : null}
+        {campos.piezas ? <p className="text-[13px] text-danger-text">{campos.piezas}</p> : null}
         <button type="button" onClick={() => { setFilas((fs) => [...fs, { clave: siguiente, pieza: "", caras: [], tratamiento: "" }]); setSiguiente((n) => n + 1); }} className={botonSecundario}>
           Agregar pieza
         </button>

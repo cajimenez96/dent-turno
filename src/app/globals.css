@@ -1,29 +1,29 @@
 @import "tailwindcss";
 @import "../styles/theme.css";
 
-/* Tokens de docs/diseno/DESIGN.md. Reglas de uso y contrastes: docs/diseno/ACCESIBILIDAD.md */
+/* Tokens de docs/diseno/DESIGN.md (Mintlify, tema claro). Reglas de uso y contrastes: docs/diseno/ACCESIBILIDAD.md */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
-  background: var(--linear-void);
+  background: var(--color-canvas);
 }
 
 body {
-  background: var(--linear-void);
-  color: var(--linear-bone);
-  font-family: var(--linear-font);
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-primary);
   font-size: 15px;
-  line-height: 1.6;
-  letter-spacing: -0.165px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Foco visible siempre: contorno de 2 px en Mist (RNF-22 a 24). */
+/* Foco visible siempre: contorno de 2 px en Ink (21:1 sobre Canvas). El verde de marca
+   no alcanza 3:1 sobre blanco, así que solo acompaña el borde de los campos (RNF-22 a 24). */
 :focus-visible {
-  outline: 2px solid var(--linear-mist);
+  outline: 2px solid var(--color-ink);
   outline-offset: 2px;
 }
 

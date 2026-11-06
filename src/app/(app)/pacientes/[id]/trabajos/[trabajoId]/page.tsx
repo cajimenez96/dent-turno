@@ -36,44 +36,44 @@ export default async function PaginaTrabajo({ params }: { params: Promise<{ id: 
 
   return (
     <div className="mx-auto max-w-2xl space-y-6">
-      <p><Link href={`/pacientes/${id}/historial`} className="objetivo-tactil inline-flex items-center text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">← Volver al historial</Link></p>
+      <p><Link href={`/pacientes/${id}/historial`} className="objetivo-tactil inline-flex items-center text-[14px] text-slate underline underline-offset-4 hover:text-ink">← Volver al historial</Link></p>
       <EncabezadoPagina titulo={`Trabajo del ${dmy(t.fecha)}`} subtitulo={`${paciente.apellido}, ${paciente.nombre} · ${t.profesional} · versión ${t.versionActual}`} />
 
       <section className={tarjeta} aria-labelledby="h-vigente">
         <h2 id="h-vigente" className="sr-only">Versión vigente</h2>
-        <p className="whitespace-pre-line text-[15px] text-linear-bone">{t.descripcion}</p>
+        <p className="whitespace-pre-line text-[15px] text-ink">{t.descripcion}</p>
         <div className="mt-3"><ListaPiezas piezas={t.piezas} /></div>
-        {t.monto ? <p className="mt-3 text-[13px] text-linear-fog">Monto informado: {formatoMonto(t.monto)}</p> : null}
+        {t.monto ? <p className="mt-3 text-[13px] text-steel">Monto informado: {formatoMonto(t.monto)}</p> : null}
       </section>
 
       {editar ? (
         <section className={tarjeta} aria-labelledby="h-editar">
-          <h2 id="h-editar" className="mb-1 text-[16px] font-medium text-linear-paper">Corregir este trabajo</h2>
-          <p className="mb-4 text-[14px] text-linear-fog">Antes de guardar vas a ver qué cambia. La versión actual no se pierde.</p>
+          <h2 id="h-editar" className="mb-1 text-[16px] font-medium text-ink">Corregir este trabajo</h2>
+          <p className="mb-4 text-[14px] text-steel">Antes de guardar vas a ver qué cambia. La versión actual no se pierde.</p>
           <FormularioTrabajo modo="editar" trabajoId={t.id} version={t.versionActual} inicial={{ fecha: t.fecha, descripcion: t.descripcion, monto: t.monto ? t.monto.replace(".", ",") : "", piezas: t.piezas }} />
         </section>
       ) : null}
 
       <section className={tarjeta} aria-labelledby="h-versiones">
-        <h2 id="h-versiones" className="text-[16px] font-medium text-linear-paper">Registro de cambios</h2>
+        <h2 id="h-versiones" className="text-[16px] font-medium text-ink">Registro de cambios</h2>
         <ol className="mt-3 space-y-4">
           {versiones.map((v) => (
-            <li key={v.numero} className="border-l-2 border-linear-graphite pl-4">
-              <p className="text-[14px] text-linear-paper">
+            <li key={v.numero} className="border-l-2 border-hairline pl-4">
+              <p className="text-[14px] text-ink">
                 Versión {v.numero}{v.numero === t.versionActual ? " (vigente)" : ""}
-                <span className="ml-2 text-[13px] text-linear-fog">{dmy(fechaDe(v.editadoAt))} {horaDe(v.editadoAt)} · {v.editadoPor ?? "Usuario desconocido"}</span>
+                <span className="ml-2 text-[13px] text-steel">{dmy(fechaDe(v.editadoAt))} {horaDe(v.editadoAt)} · {v.editadoPor ?? "Usuario desconocido"}</span>
               </p>
               {v.resumen ? (
-                <ul className="mt-1 list-disc space-y-0.5 pl-5 text-[13px] text-linear-mist">
+                <ul className="mt-1 list-disc space-y-0.5 pl-5 text-[13px] text-slate">
                   {v.resumen.split("\n").map((l) => (<li key={l}>{l}</li>))}
                 </ul>
-              ) : <p className="mt-1 text-[13px] text-linear-fog">Registro original.</p>}
+              ) : <p className="mt-1 text-[13px] text-steel">Registro original.</p>}
               {v.numero !== t.versionActual ? (
                 <details className="mt-1">
-                  <summary className="objetivo-tactil flex cursor-pointer items-center text-[13px] text-linear-mist">Ver cómo estaba</summary>
-                  <div className="mt-2 space-y-2 rounded-[6px] border border-linear-graphite p-3">
-                    <p className="text-[13px] text-linear-fog">Fecha {dmy(v.fecha)}{v.monto ? ` · Informado ${formatoMonto(v.monto)}` : ""}</p>
-                    <p className="whitespace-pre-line text-[14px] text-linear-bone">{v.descripcion}</p>
+                  <summary className="objetivo-tactil flex cursor-pointer items-center text-[13px] text-slate">Ver cómo estaba</summary>
+                  <div className="mt-2 space-y-2 rounded-md border border-hairline p-3">
+                    <p className="text-[13px] text-steel">Fecha {dmy(v.fecha)}{v.monto ? ` · Informado ${formatoMonto(v.monto)}` : ""}</p>
+                    <p className="whitespace-pre-line text-[14px] text-ink">{v.descripcion}</p>
                     <ListaPiezas piezas={v.piezas} />
                   </div>
                 </details>
@@ -85,7 +85,7 @@ export default async function PaginaTrabajo({ params }: { params: Promise<{ id: 
 
       {editar ? (
         <section className={tarjeta} aria-labelledby="h-eliminar">
-          <h2 id="h-eliminar" className="mb-3 text-[16px] font-medium text-linear-paper">Eliminar</h2>
+          <h2 id="h-eliminar" className="mb-3 text-[16px] font-medium text-ink">Eliminar</h2>
           <EliminarTrabajo trabajoId={t.id} />
         </section>
       ) : null}

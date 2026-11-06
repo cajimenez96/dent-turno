@@ -14,7 +14,7 @@ export function DesactivarPaciente({ id }: { id: string }) {
   return (
     <form action={accion} className="space-y-3">
       <input type="hidden" name="id" value={id} />
-      <p className="text-[14px] text-linear-mist">El paciente deja de aparecer en las búsquedas. Su historia y sus turnos pasados se conservan.</p>
+      <p className="text-[14px] text-slate">El paciente deja de aparecer en las búsquedas. Su historia y sus turnos pasados se conservan.</p>
       <AvisoError error={s.error} />
       <div className="flex flex-wrap gap-3">
         <button type="submit" disabled={pendiente} className={botonPeligro}>{pendiente ? "Desactivando…" : "Sí, desactivar"}</button>

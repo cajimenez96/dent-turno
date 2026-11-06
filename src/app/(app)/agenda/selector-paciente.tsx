@@ -43,13 +43,13 @@ export function SelectorPaciente({ inicial, error, volver }: { inicial: Paciente
     return (
       <div>
         <input type="hidden" name="pacienteId" value={elegido.id} />
-        <p className="block text-[13px] font-medium text-linear-mist">Paciente</p>
-        <div className="mt-1 flex flex-wrap items-center justify-between gap-3 rounded-[6px] border border-linear-ash bg-linear-obsidian px-3 py-2.5">
+        <p className="block text-[13px] font-medium text-slate">Paciente</p>
+        <div className="mt-1 flex flex-wrap items-center justify-between gap-3 rounded-md border border-stone bg-canvas px-3 py-2.5">
           <div>
-            <p className="text-[15px] text-linear-paper">{nombre(elegido)}</p>
-            <p className="text-[13px] text-linear-fog">{detalle(elegido)}</p>
+            <p className="text-[15px] text-ink">{nombre(elegido)}</p>
+            <p className="text-[13px] text-steel">{detalle(elegido)}</p>
           </div>
-          <button type="button" onClick={() => { setElegido(null); setTexto(""); }} className="objetivo-tactil text-[14px] text-linear-mist underline underline-offset-4 hover:text-linear-paper">
+          <button type="button" onClick={() => { setElegido(null); setTexto(""); }} className="objetivo-tactil text-[14px] text-slate underline underline-offset-4 hover:text-ink">
             Cambiar paciente
           </button>
         </div>
@@ -59,7 +59,7 @@ export function SelectorPaciente({ inicial, error, volver }: { inicial: Paciente
 
   return (
     <div>
-      <label htmlFor={id} className="block text-[13px] font-medium text-linear-mist">Paciente</label>
+      <label htmlFor={id} className="block text-[13px] font-medium text-slate">Paciente</label>
       <input
         id={id}
         type="search"
@@ -72,29 +72,29 @@ export function SelectorPaciente({ inicial, error, volver }: { inicial: Paciente
         aria-describedby={error ? `${id}-estado ${id}-error` : `${id}-estado`}
       />
       <div id={`${id}-estado`} aria-live="polite" className="mt-2 text-[14px]">
-        {fase === "reposo" ? <p className="text-linear-fog">Escribí al menos 2 letras o el documento.</p> : null}
-        {fase === "buscando" ? <p className="text-linear-fog">Buscando…</p> : null}
-        {fase === "error" ? <p className="text-linear-coral-red">No pudimos buscar. Revisá tu conexión y volvé a escribir.</p> : null}
+        {fase === "reposo" ? <p className="text-steel">Escribí al menos 2 letras o el documento.</p> : null}
+        {fase === "buscando" ? <p className="text-steel">Buscando…</p> : null}
+        {fase === "error" ? <p className="text-danger-text">No pudimos buscar. Revisá tu conexión y volvé a escribir.</p> : null}
         {!corto && estado.fase === "listo" && estado.pacientes.length === 0 ? (
-          <p className="text-linear-mist">
+          <p className="text-slate">
             No encontramos pacientes con “{texto.trim()}”.{" "}
-            <Link href={nuevoHref} className="underline underline-offset-4 hover:text-linear-paper">Crear paciente nuevo</Link>
+            <Link href={nuevoHref} className="underline underline-offset-4 hover:text-ink">Crear paciente nuevo</Link>
           </p>
         ) : null}
       </div>
-      {error ? <p id={`${id}-error`} className="mt-1 text-[13px] text-linear-coral-red">{error}</p> : null}
+      {error ? <p id={`${id}-error`} className="mt-1 text-[13px] text-danger-text">{error}</p> : null}
       {!corto && estado.fase === "listo" && estado.pacientes.length > 0 ? (
-        <ul className="mt-1 divide-y divide-linear-graphite rounded-[6px] border border-linear-ash">
+        <ul className="mt-1 divide-y divide-hairline rounded-md border border-hairline">
           {estado.pacientes.map((p) => (
             <li key={p.id}>
-              <button type="button" onClick={() => setElegido(p)} className="objetivo-tactil block w-full px-3 py-2.5 text-left hover:bg-linear-obsidian">
-                <span className="block text-[15px] text-linear-paper">{nombre(p)}</span>
-                <span className="block text-[13px] text-linear-fog">{detalle(p)}</span>
+              <button type="button" onClick={() => setElegido(p)} className="objetivo-tactil block w-full px-3 py-2.5 text-left hover:bg-surface">
+                <span className="block text-[15px] text-ink">{nombre(p)}</span>
+                <span className="block text-[13px] text-steel">{detalle(p)}</span>
               </button>
             </li>
           ))}
           <li className="px-3 py-2.5 text-[14px]">
-            <Link href={nuevoHref} className="text-linear-mist underline underline-offset-4 hover:text-linear-paper">¿No está? Crear paciente nuevo</Link>
+            <Link href={nuevoHref} className="text-slate underline underline-offset-4 hover:text-ink">¿No está? Crear paciente nuevo</Link>
           </li>
         </ul>
       ) : null}
